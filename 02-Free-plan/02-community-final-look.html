@@ -1,0 +1,365 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Community module – final look (sample content)</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}
+:root{--brand:#354A40;--accent:#B5D334;--ink:#1F2A25;--muted:#4A5751;--line:#DCE0DD;--bg:#F5F6F5;--gold:#6B5320}
+body{margin:0;font-family:'DM Sans','Helvetica Neue',Arial,sans-serif;color:var(--ink);background:var(--bg)}
+button{font:inherit;cursor:pointer}
+h1,h2,h3{font-family:'Space Grotesk',sans-serif;margin:0}
+h1{font-size:26px;line-height:1.2}
+h2{font-size:19px;line-height:1.3}
+.note{background:#EEECFB;color:#3E35A8;font-size:13px;text-align:center;padding:8px 16px}
+
+.top{background:var(--brand);color:#fff;position:sticky;top:0;z-index:20}
+.top-in{padding:10px 24px;display:flex;align-items:center;gap:16px}
+.menu-btn{display:none;background:none;border:0;color:#fff;font-size:22px}
+.logo{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:20px;white-space:nowrap;cursor:pointer}
+.search{flex:1;max-width:520px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);color:#fff;padding:9px 14px;border-radius:6px;font-size:14px}
+.search::placeholder{color:#D7DED9}
+.sitenav{display:flex;gap:20px;margin-left:24px;font-size:16px}
+.sitenav a{color:#fff;cursor:pointer}
+.sitenav a.on{text-decoration:underline;text-underline-offset:6px}
+@media (max-width:1100px){.sitenav{display:none}}
+.top-r{margin-left:auto;display:flex;align-items:center;gap:14px}
+.ico{background:none;border:0;color:#fff;font-size:18px;position:relative;padding:4px}
+.dot{position:absolute;top:-2px;right:-4px;min-width:16px;height:16px;border-radius:8px;background:var(--accent);color:var(--ink);font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center}
+.avatar{width:34px;height:34px;border-radius:50%;background:#C9D3CE;color:var(--brand);display:inline-flex;align-items:center;justify-content:center;font-weight:600;font-size:13px;flex:none}
+.avatar.host{background:var(--accent)}
+.avatar.lg{width:72px;height:72px;font-size:24px}
+
+.shell{padding:22px 24px 22px 16px;display:grid;grid-template-columns:250px minmax(0,1fr) 300px;gap:24px;align-items:start}
+.shell.no-rail{grid-template-columns:250px minmax(0,1fr)}
+.shell.no-rail .rail{display:none}
+@media (max-width:1100px){.shell,.shell.no-rail{grid-template-columns:230px minmax(0,1fr)}.rail{grid-column:2}}
+@media (max-width:760px){
+  .shell,.shell.no-rail{grid-template-columns:1fr;padding:14px}.rail{grid-column:auto}
+  .menu-btn{display:block}.search{display:none}
+  .side{position:fixed!important;top:56px;left:0;bottom:0;width:280px;background:#fff;z-index:15;padding:14px;overflow:auto;transform:translateX(-100%);transition:transform .2s;box-shadow:4px 0 20px rgba(0,0,0,.12)}
+  .side.open{transform:none}
+}
+.side{position:sticky;top:76px;display:flex;flex-direction:column;gap:12px;max-height:calc(100vh - 90px);overflow:auto}
+.side ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:1px}
+.nav{width:100%;display:flex;justify-content:space-between;align-items:center;gap:8px;padding:8px 10px;border-radius:6px;border:0;background:none;font-size:15px;text-align:left;color:var(--ink)}
+.nav:hover{background:#E8EBE9}
+.nav.on{background:#E3E8E5;font-weight:600;box-shadow:inset 4px 0 0 #B5D334}
+.sec{border-top:1px solid var(--line);padding-top:10px}
+.sechead{width:100%;display:flex;justify-content:space-between;align-items:center;background:none;border:0;padding:6px 10px;border-radius:6px;font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--brand)}
+.sechead:hover{background:#E8EBE9}
+.chev{color:#9DB82A;font-size:16px;transition:transform .15s}
+.sec.closed .chev{color:#9DB82A;font-size:16px;transform:rotate(-90deg)}
+.sec.closed ul{display:none}
+.badge{font-size:11px;font-weight:600;padding:2px 7px;border-radius:999px;background:#E3E8E5;color:var(--muted);white-space:nowrap}
+.badge.paid{background:#F1E7CF;color:var(--gold)}
+.badge.ok{background:#E3F0D2;color:#3C5A14}
+.badge.pin{background:var(--accent);color:var(--ink)}
+
+.card{background:#fff;border:1px solid var(--line);border-radius:10px}
+.pad{padding:20px 22px}
+.stack{display:flex;flex-direction:column;gap:12px}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.between{justify-content:space-between}
+.muted{color:var(--muted);font-size:14px}
+.img{background:linear-gradient(135deg,#C9D3CE,#E3E8E5);display:flex;align-items:center;justify-content:center;color:var(--brand);font-size:13px;border-radius:8px}
+.type{font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--brand)}
+.text{margin:0;font-size:15px;line-height:1.6;color:#3B4842}
+.tag{font-size:13px;color:var(--brand);background:#EEF2EF;padding:3px 9px;border-radius:4px;border:0}
+.meta{display:flex;flex-wrap:wrap;gap:14px;align-items:center;font-size:14px;color:var(--muted)}
+.grp{font-size:12px;font-weight:600;color:var(--muted);border:1px solid var(--line);padding:2px 8px;border-radius:4px}
+.btn{background:var(--accent);color:var(--ink);border:0;padding:10px 18px;border-radius:6px;font-weight:600;font-size:14px}
+.btn.accent{background:var(--accent);color:var(--ink)}
+.btn.ghost{background:#EEF6CC;color:var(--ink);border:1.5px solid var(--accent)}
+.btn:hover{filter:brightness(.95)}
+.btn.small{padding:7px 12px;font-size:13px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 12px}
+.chip{border:1px solid var(--line);background:#fff;padding:7px 14px;border-radius:999px;font-size:14px;color:var(--ink)}
+.chip[aria-pressed="true"]{background:var(--brand);border-color:var(--brand);color:#fff}
+.feed{display:flex;flex-direction:column;gap:14px}
+.post .acts{display:flex;gap:18px;border-top:1px solid var(--line);padding-top:12px;font-size:14px;color:var(--muted)}
+.poll{display:flex;flex-direction:column;gap:8px}
+.opt{position:relative;border:1px solid var(--line);border-radius:6px;padding:10px 12px;font-size:14px;overflow:hidden;display:flex;justify-content:space-between}
+.opt i{position:absolute;inset:0 auto 0 0;background:#E3E8E5;z-index:0}
+.opt span,.opt b{position:relative}
+.comment{display:flex;gap:10px}
+.comment .body{flex:1;background:var(--bg);border-radius:8px;padding:9px 13px;font-size:14px;line-height:1.5}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px}
+.ev{display:grid;grid-template-columns:60px 1fr auto;gap:14px;align-items:center;padding:14px 18px}
+@media (max-width:560px){.ev{grid-template-columns:54px 1fr}.ev>button{grid-column:1/-1}}
+.date{width:54px;border:1px solid var(--line);border-radius:6px;text-align:center;padding:4px 0;font-size:11px;color:var(--muted);text-transform:uppercase;background:#fff}
+.date b{display:block;font-size:19px;color:var(--ink)}
+.progress{height:6px;background:#E3E8E5;border-radius:3px;overflow:hidden}
+.progress div{height:100%;background:var(--brand)}
+.li{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 0;border-top:1px solid var(--line);font-size:15px}
+.li:first-child{border-top:0}
+.price{font-family:'Space Grotesk',sans-serif;font-size:28px;font-weight:600}
+.price span{font-size:15px;font-weight:400;color:var(--muted)}
+.bubble{max-width:75%;padding:10px 14px;border-radius:12px;font-size:15px;line-height:1.45;background:var(--bg)}
+.bubble.me{align-self:flex-end;background:var(--brand);color:#fff}
+.rail{display:flex;flex-direction:column;gap:16px;position:sticky;top:76px}
+.mini{display:flex;gap:12px;align-items:center;padding:7px 0;font-size:14px;line-height:1.4}
+.mini span{display:block;font-size:12px;color:var(--muted)}
+.mini .sq{width:44px;height:44px;flex:none;border-radius:6px}
+.tabs{display:flex;gap:4px;border-top:1px solid var(--line);margin-top:18px;overflow-x:auto}
+.tab{background:none;border:0;padding:14px 22px;font-size:15px;color:var(--muted);border-bottom:3px solid transparent;white-space:nowrap}
+.tab.on{color:var(--ink);font-weight:600;border-bottom-color:var(--accent)}
+.gbody{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:18px;margin-top:18px;align-items:start}
+@media (max-width:1000px){.gbody{grid-template-columns:1fr}}
+.react{border:1px solid var(--line);border-radius:4px;padding:3px 9px;font-size:13px;color:var(--muted)}
+.link-btn{background:none;border:0;color:var(--brand);font-weight:600;font-size:14px;padding:0;text-decoration:underline}
+details{border-top:1px solid var(--line);padding:12px 0}
+details:first-of-type{border-top:0}
+summary{font-weight:600;cursor:pointer}
+
+/* ===== STANDARD SITE HEADER (global in Wix) ===== */
+.sh{background:#354A40;color:#fff;position:sticky;top:0;z-index:30;font-family:'DM Sans','Helvetica Neue',sans-serif}
+.sh *{box-sizing:border-box}
+.sh-bar{max-width:1200px;margin:0 auto;padding:16px 32px;display:flex;flex-wrap:nowrap;align-items:center;justify-content:space-between;gap:16px}
+.sh-logo{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:24px;color:#fff;text-decoration:none;white-space:nowrap}
+.sh .sh-nav{display:flex;align-items:center;gap:26px;font-size:16px;flex-wrap:nowrap;margin:0}
+.sh .sh-nav a{color:#fff;text-decoration:none;font-size:16px;white-space:nowrap}
+.sh .sh-nav a:hover,.sh .sh-nav a[aria-current]{text-decoration:underline;text-underline-offset:6px}
+.sh .sh-nav a[aria-current]{font-weight:600}
+.sh-act{display:flex;align-items:center;gap:16px;white-space:nowrap}
+.sh-act a{color:#fff;text-decoration:none;font-size:16px}
+.sh-join{background:#B5D334;color:#1F2A25 !important;font-weight:600;font-size:14px !important;padding:12px 28px;border-radius:6px}
+.sh-ico{position:relative;font-size:18px;line-height:1;color:#fff;background:none;border:0;padding:0;cursor:pointer}
+.sh-ico .n{position:absolute;top:-7px;right:-9px;background:#B5D334;color:#1F2A25;font-size:10px;font-weight:700;border-radius:9px;padding:1px 5px}
+.sh-av{width:32px;height:32px;border-radius:50%;background:#B5D334;color:#1F2A25;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700}
+.sh-burger{display:none;background:none;border:1px solid rgba(255,255,255,.5);color:#fff;font:inherit;padding:8px 12px;cursor:pointer}
+@media (max-width:1180px){.sh .sh-nav{display:none}.sh-burger{display:inline-block}}
+@media (max-width:720px){.sh-bar{padding:12px 20px;gap:10px}.sh-logo{font-size:20px}.sh-act .sh-login{display:none}.sh-join{padding:10px 16px}}
+
+/* ===== STANDARD SITE FOOTER (global in Wix; identical on every page) ===== */
+footer{--cta:#B5D334;--ink:#1F2A25;--line-strong:#C9CECB;font-family:'DM Sans','Helvetica Neue',sans-serif;line-height:normal}
+footer .wrap{max-width:1200px;margin:0 auto;padding:0 32px;box-sizing:border-box}
+footer *{box-sizing:border-box}
+footer nav{font-size:16px;align-items:stretch;flex-wrap:nowrap;justify-content:flex-start;margin:0}
+footer h2{font-family:'Space Grotesk',sans-serif;line-height:normal}
+footer label{font-size:15px;font-weight:600;display:block;margin-bottom:6px}
+footer input[type=text],footer input[type=email]{width:100%;font:inherit;font-size:16px;color:var(--ink);background:#fff;border:1px solid var(--line-strong);padding:12px 14px;border-radius:0}
+footer .success{display:none}
+footer{background:#374A42;color:#fff}
+footer .wrap{padding-top:64px;padding-bottom:48px;display:flex;flex-direction:column;gap:56px}
+.f-logo{font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:32px;color:#fff;text-decoration:none}
+.f-grid{display:grid;grid-template-columns:1fr 1.2fr 0.8fr 1.8fr;gap:32px;align-items:start}
+.f-grid nav{display:flex;flex-direction:column;gap:12px}
+.f-grid nav h2{margin:0 0 8px;font-weight:500;font-size:24px;color:#fff}
+.f-grid nav a{color:var(--cta);text-decoration:none;font-size:18px}
+.f-grid nav a:hover{text-decoration:underline;color:var(--cta)}
+.f-form{border:2px solid #fff;border-radius:10px;padding:24px 20px;display:flex;flex-direction:column;gap:18px;background:transparent}
+.f-title{margin:0;font-weight:500;font-size:32px;color:#fff}
+.f-form label{color:#fff;font-size:16px;font-weight:500;margin-bottom:8px}
+.f-form input[type=text],.f-form input[type=email]{background:#F4F5F1;border:0;border-radius:6px;padding:16px 14px}
+.f-check a{color:#fff}
+.f-check{display:flex;gap:14px;align-items:flex-start;font-weight:400;font-size:18px;line-height:1.5;margin:0}
+.f-check input{width:22px;height:22px;margin-top:4px;accent-color:var(--cta)}
+.f-btn{background:var(--cta);color:#1F2A25;border:0;border-radius:6px;font:inherit;font-size:18px;padding:14px;cursor:pointer}
+.f-done{display:none;margin:0;font-size:17px}
+.f-form.sent .f-field{display:none}.f-form.sent .f-done{display:block}
+.f-copy{font-size:16px}
+.f-copy a{color:#fff}
+@media (max-width:1080px){footer .f-grid{grid-template-columns:1fr 1fr}footer .f-form{grid-column:1/-1}}
+@media (max-width:720px){footer .wrap{padding-left:20px;padding-right:20px}}
+
+.cm-mbar{display:none;background:#fff;border-bottom:1px solid #DCE0DD;padding:8px 14px;position:sticky;top:56px;z-index:16}
+.cm-mbar .menu-btn{color:#1F2A25;font-size:15px;font-weight:600;background:none;border:0}
+@media (max-width:900px){.cm-mbar{display:block}}
+</style>
+</head>
+<body>
+<div class="note">Sample content to show the final look. Built only with native Wix apps (see the developer spec file). Viewing as a free member.</div>
+
+<!-- Standard site header (global): logo, main menu, cart icon (Wix Stores), Members login bar (logged out: Log in + Join Free; logged in: notifications + avatar). -->
+<header class="sh"><div class="sh-bar">
+  <a class="sh-logo" href="../01-Public-pages/01-home.html">Business Name</a>
+  <nav class="sh-nav" aria-label="Main"><a href="../01-Public-pages/01-home.html">Home</a><a href="../01-Public-pages/02-about-story.html">About</a><a href="../01-Public-pages/00-wix-app-page.html?p=Courses">Courses</a><a href="../01-Public-pages/16-shop-final-look.html">Shop</a><a href="../01-Public-pages/00-wix-app-page.html?p=Consulting">Consulting</a><a href="../01-Public-pages/19-events.html">Events</a><a href="#top" aria-current="page">Community</a><a href="../01-Public-pages/00-wix-app-page.html?p=Plans%20%26%20Pricing">Plans &amp; Pricing</a></nav>
+  <div class="sh-act"><span class="sh-ico" aria-label="Cart">🛍</span><span class="sh-ico" aria-label="Notifications">🔔<span class="n">3</span></span><span class="sh-av" aria-label="My account">AM</span><button class="sh-burger" type="button" aria-label="Open menu">Menu</button></div>
+</div></header>
+<div class="cm-mbar"><button class="menu-btn" id="menuBtn" aria-label="Open community menu">☰ Community menu</button></div>
+
+<div class="shell" id="shell">
+  <nav class="side" id="side" aria-label="Community"></nav>
+  <main id="main"></main>
+  <aside class="rail" id="rail"></aside>
+</div>
+
+<script>
+const HOST='Sam Rivera';
+const NAV=[
+  {items:[['home','🏠 Home'],['events','📅 Events'],['courses','🎓 Courses'],['book','📞 Book a session'],['messages','✉️ Message Business Name']]},
+  {key:'groups',title:'Groups',items:[['group-open','Open Forum','Public'],['group-lounge','Members Lounge','Private'],['group-inner','Inner Circle','Paid']]},
+  {key:'start',title:'Getting started',items:[['start','Start here'],['intro','Introductions'],['faq','FAQ']]},
+  {items:[['plans','💳 Plans'],['settings','⚙️ Settings']]}
+];
+const posts=[
+  {g:'Open Forum',pin:true,type:'Video essay',title:'Why most frameworks fail when they meet reality',body:'Frameworks look clean on paper. In practice, the messy parts are where the learning happens. In this 12-minute video I walk through three examples and what they have in common.',topics:['strategy','systems'],when:'2 days ago',likes:34,comments:[['Priya S.','This matches what I saw in our last reorg. The second example especially.'],['Jeroen V.','Would love a follow-up on how to spot this early.']]},
+  {g:'Members Lounge',type:'Poll',title:'Which topic should the next live Q&A cover?',body:'Vote below. The winning topic becomes the session on 18 November.',topics:['q-and-a'],when:'3 days ago',likes:12,poll:[['Decision-making under uncertainty',48],['Building a learning routine',33],['Turning ideas into projects',19]],comments:[['Aisha R.','Voted for the first one. Real examples would help.']]},
+  {g:'Members Lounge',type:'Essay · 6 min read',title:'The difference between knowing and understanding',body:'Most of what we call knowledge is recognition. Understanding is being able to rebuild the idea from scratch.',topics:['learning'],when:'5 days ago',likes:21,comments:[['Maria K.','Great framing.']]},
+  {g:'Members Lounge',by:['Priya S.','PS','Member'],type:'Question',title:'How do you keep notes from books you actually reuse?',body:'I read a lot but rarely go back to my notes. Curious what systems people here use. Paper, apps, something else?',topics:['learning'],when:'1 day ago',likes:8,comments:[['Jeroen V.','One page per book, max. If it does not fit, I did not understand it yet.'],['Sam Rivera','Good question. I will cover this in the next Q&A too.']]},
+  {g:'Members Lounge',by:['Tom B.','TB','Member'],type:'Discussion',title:'Tried the "what would make this not worth doing" question this week',body:'Used it before taking on a new client. Saved me from a project that looked good but was not. Anyone else tried it?',topics:['systems'],when:'4 days ago',likes:11,comments:[['Aisha R.','Yes, works for saying no to meetings too.']]},
+  {g:'Inner Circle',locked:true,type:'Case study',title:'How a 12-person team cut decision time in half',topics:['case-studies'],when:'1 week ago',likes:9,comments:[]},
+  {g:'Open Forum',type:'Short note',title:'One question I ask before starting anything new',body:'"What would make this not worth doing?" It saves me weeks every year.',topics:['systems'],when:'2 weeks ago',likes:15,comments:[['Lucas D.','Stealing this.']]}
+];
+const events=[['21','Oct','Live Q&A: Decision-making under uncertainty','Paid members · Online (Zoom)','Paid members only'],['04','Nov','Workshop: Designing a learning routine','Open to all · Online (Zoom)','Register'],['18','Nov','Live Q&A: Topic chosen by poll','Paid members · Online (Zoom)','Paid members only'],['02','Dec','Meetup: Ideas over coffee','Amsterdam · In person','Register']];
+const people=[['Sam Rivera','SR','Host'],['Priya S.','PS','Inner Circle'],['Jeroen V.','JV','Founding member'],['Maria K.','MK','Inner Circle'],['Tom B.','TB',''],['Aisha R.','AR','Founding member'],['Lucas D.','LD',''],['Alex M.','AM','Founding member']];
+let view='home',collapsed={},topic='all',bookCat='all',gtab='Discussion';
+
+function renderSide(){
+  const it=([v,l,t])=>`<li><button class="nav ${view===v?'on':''}" data-go="${v}">${l}${t?`<span class="badge ${t==='Paid'?'paid':''}">${t}</span>`:''}</button></li>`;
+  side.innerHTML=NAV.map((s,i)=>s.title?`<div class="sec ${collapsed[s.key]?'closed':''}"><button class="sechead" data-collapse="${s.key}"><span>${s.title}</span><span class="chev">▾</span></button><ul>${s.items.map(it).join('')}</ul></div>`:`<div class="sec" ${i===0?'style="border:0;padding:0"':''}><ul>${s.items.map(it).join('')}</ul></div>`).join('');
+}
+const rail=()=>`<section class="card pad"><h3 style="font-size:16px;margin-bottom:8px">Upcoming events</h3>${events.map(e=>`<div class="mini"><div class="date"><b>${e[0]}</b>${e[1]}</div><div>${e[2]}<span>${e[3]}</span></div></div>`).join('')}<button class="btn ghost small" data-go="events" style="margin-top:8px">All events</button></section>
+<section class="card pad"><h3 style="font-size:16px;margin-bottom:8px">Recent articles</h3>${[['The cost of deciding too late','12 Oct · 5 min read'],['On thinking in second-order effects','5 Oct · 7 min read · Members'],['Three habits of clear thinkers','28 Sep · 4 min read'],['Notes on deliberate practice','21 Sep · 6 min read · Members']].map(b=>`<div class="mini"><div class="sq img"></div><div>${b[0]}<span>${b[1]}</span></div></div>`).join('')}<button class="btn ghost small" style="margin-top:8px">All articles</button></section>`;
+
+function postCard(p,showGroup=true){
+  const author=p.by?{n:p.by[0],i:p.by[1],role:''}:{n:HOST,i:'SR',role:'Admin'};
+  if(p.locked) return `<article class="card pad stack post"><div class="row between"><div class="row"><span class="avatar host">SR</span><div><b>${HOST}</b> <span class="badge">Admin</span><div class="muted" style="font-size:13px">${p.when}${showGroup?` · posted in <b>${p.g}</b>`:''}</div></div></div></div><h2>${p.title}</h2><div class="row" style="background:#FBF6EA;border-radius:8px;padding:12px 14px"><span class="muted" style="flex:1">This post is for Inner Circle members.</span><button class="btn small" data-go="plans">See plans</button></div></article>`;
+  const total=p.poll?p.poll.reduce((a,b)=>a+b[1],0):0;
+  return `<article class="card post" style="overflow:hidden"><div class="pad stack">
+    <div class="row between"><div class="row"><span class="avatar ${author.role?'host':''}">${author.i}</span><div><b>${author.n}</b>${author.role?` <span class="badge">${author.role}</span>`:''}${p.pin?' <span class="badge pin">📌 Pinned</span>':''}<div class="muted" style="font-size:13px">${p.when}${showGroup?` · posted in <b>${p.g}</b>`:''}</div></div></div><span class="muted">↗ ⋯</span></div>
+    <h2>${p.title}</h2><p class="text">${p.body}</p>
+    ${p.pin?'<div class="img" style="height:240px">▶ Video</div>':''}
+    ${p.poll?`<div class="poll">${p.poll.map(o=>`<div class="opt"><i style="width:${o[1]}%"></i><span>${o[0]}</span><b>${o[1]}%</b></div>`).join('')}<span class="muted">${total*2} votes</span></div>`:''}
+    ${showGroup?'':`<div class="row">${p.topics.map(t=>`<button class="tag" data-topic="${t}">#${t}</button>`).join('')}</div>`}
+    <div class="row"><span class="react">👍 ${p.likes}</span><span class="react">+ 🙂</span></div>
+    <div class="row between muted" style="font-size:13px"><span>💬 ${p.comments.length} Comments</span><span>👁 ${p.likes*4+20} Views</span></div>
+    ${p.comments.slice(0,2).map(c=>`<div class="comment"><span class="avatar" style="width:30px;height:30px;font-size:11px">${c[0].split(' ').map(x=>x[0]).join('')}</span><div class="body"><b>${c[0]}</b><div>${c[1]}</div></div></div>`).join('')}
+    <div style="border:1px solid var(--line);border-radius:4px;padding:10px 14px;color:var(--muted);font-size:14px">Write a comment…</div>
+  </div></article>`;
+}
+const composer=(note)=>`<section class="card" style="margin-bottom:14px"><div class="pad row" style="padding-bottom:12px"><span class="avatar">AM</span><div style="flex:1;border:1px solid var(--line);border-radius:4px;padding:9px 12px;color:var(--muted);font-size:14px">Share something…</div><button class="btn small">Create a Post</button></div><div class="row" style="border-top:1px solid var(--line);justify-content:space-around;padding:10px;font-size:14px;color:var(--muted)"><span>📷 Photo</span><span>🎥 Video</span><span>GIF</span></div>${note?`<div class="muted" style="font-size:12px;padding:0 16px 10px">${note}</div>`:''}</section>`;
+function feed(list,showGroup){
+  const tps=[...new Set(list.flatMap(p=>p.topics))];
+  const shown=list.filter(p=>topic==='all'||p.topics.includes(topic));
+  const pinned=list.filter(p=>p.pin), rest=shown.filter(p=>!p.pin);
+  return `${pinned.length?`<div class="feed">${pinned.map(p=>postCard(p,showGroup)).join('')}</div>`:''}
+  <div class="chips"><button class="chip" data-topic="all" aria-pressed="${topic==='all'}">All</button>${tps.map(t=>`<button class="chip" data-topic="${t}" aria-pressed="${topic===t}">#${t}</button>`).join('')}</div>
+  <div class="feed">${rest.map(p=>postCard(p,showGroup)).join('')}</div>`;
+}
+function group(name,privacy,desc,joined,members,locked,canPost){
+  const list=posts.filter(p=>p.g===name);
+  const gm=people.filter((m,i)=>name==='Open Forum'||(name==='Members Lounge'?i!==1||true:[0,1,3].includes(i)));
+  const stack=gm.slice(0,5).map((m,i)=>`<span class="avatar" style="width:26px;height:26px;font-size:10px;margin-left:${i?-8:0}px;border:2px solid #fff">${m[1]}</span>`).join('');
+  const action=joined?'<button class="btn ghost small">✓ Joined</button>':(locked?'<button class="btn small" data-go="plans">Join – see plans</button>':'<button class="btn small">Join group</button>');
+  const tabs=['Discussion','Media','Files','Members','About'];
+  const joinPanel=`<section class="card pad stack"><h2>Join ${name} to see this</h2><ul class="text" style="padding-left:20px;margin:0"><li>Member-only posts and case studies</li><li>All courses</li><li>Paid member events</li><li>15% discount in the store</li></ul><div><button class="btn" data-go="plans">See plans</button></div></section>`;
+  let body;
+  if(locked && gtab!=='About') body=joinPanel;
+  else if(gtab==='Discussion'){
+    body=(canPost?composer(''):`<p class="muted" style="margin:0 0 14px">Only ${HOST} posts in this group. Members can comment.</p>`)+feed(list,false).replace('<div class="chips"','<div class="chips" style="margin-top:14px"');
+  } else if(gtab==='Media'){
+    body=`<section class="card pad"><div class="grid" style="grid-template-columns:repeat(auto-fill,minmax(150px,1fr))">${Array.from({length:8},(_,i)=>`<div class="img" style="aspect-ratio:1/1">${i%3===0?'▶':'🖼'}</div>`).join('')}</div></section>`;
+  } else if(gtab==='Files'){
+    body=`<section class="card pad">${[['Reading list.pdf','PDF · 240 KB'],['Session slides – October.pdf','PDF · 3.1 MB'],['Weekly review template.docx','DOCX · 48 KB']].map(x=>`<div class="li"><span>📄 ${x[0]}</span><span class="muted">${x[1]}</span></div>`).join('')}</section>`;
+  } else if(gtab==='Members'){
+    body=`<section class="card pad"><div class="row between" style="margin-bottom:8px"><h2>${members} members</h2><input class="search" style="background:#fff;color:var(--ink);border-color:var(--line);max-width:240px" placeholder="Search members"></div>${gm.map(m=>`<div class="li"><div class="row"><span class="avatar ${m[2]==='Host'?'host':''}">${m[1]}</span><div><b>${m[0]}</b>${m[2]?` <span class="badge ${m[2]==='Inner Circle'||m[2]==='Host'?'paid':''}">${m[2]==='Host'?'Admin':m[2]}</span>`:''}</div></div><button class="btn ghost small">Follow</button></div>`).join('')}</section>`;
+  } else {
+    body=`<section class="card pad stack"><h2>About this group</h2><p class="text">${desc}</p><div class="li"><span>Privacy</span><b>${privacy==='Paid'?'Private · paid membership':privacy}</b></div><div class="li"><span>Posting</span><b>${canPost?'All members':'Host only, members comment'}</b></div><div class="li"><span>Created</span><b>March 2026</b></div><div class="stack" style="gap:6px;margin-top:6px"><b>Group rules</b><span class="text">1. Be respectful. 2. Stay on topic. 3. No promotion without permission.</span></div></section>`;
+  }
+  const aside=`<aside class="stack" style="gap:14px">
+    ${joined?`<section class="card pad stack" style="gap:10px"><div class="row between"><h3 style="font-size:16px">Get started in the group</h3><span class="muted">✕</span></div><div class="row" style="gap:8px"><span class="muted" style="font-size:12px">0/${canPost?2:1} completed</span><div class="progress" style="flex:1"><div style="width:0"></div></div></div>${canPost?'<div class="li" style="border:0;padding:4px 0">＋ Create your first post</div>':''}<div class="li" style="border:0;padding:4px 0">👍 React to a post</div></section>`:`<section class="card pad stack" style="gap:8px"><h3 style="font-size:16px">About</h3><p class="text" style="font-size:14px">${desc}</p></section>`}
+    ${locked?'':`<section class="card pad"><h3 style="font-size:16px;margin-bottom:6px">Members</h3>${gm.slice(0,5).map(m=>`<div class="mini" style="justify-content:space-between"><div class="row" style="gap:10px"><span class="avatar ${m[2]==='Host'?'host':''}" style="width:30px;height:30px;font-size:11px">${m[1]}</span>${m[0]}</div><button class="link-btn">Follow</button></div>`).join('')}<button class="link-btn" data-gtab="Members" style="margin-top:6px">See all members</button></section>`}
+  </aside>`;
+  return `<div class="muted" style="margin-bottom:10px"><span data-go="home" style="cursor:pointer">Home</span> › Groups › <b style="color:var(--ink)">${name}</b></div>
+  <section class="card" style="overflow:hidden"><div class="img" style="height:200px;border-radius:0">Group cover image</div>
+    <div class="pad" style="padding-bottom:0"><div class="row between" style="align-items:flex-start"><div class="stack" style="gap:6px"><h1>${name}</h1><div class="row muted" style="gap:8px"><span>${privacy==='Paid'?'Private · Paid':privacy} · ${members} members</span><span style="display:inline-flex">${stack}</span></div></div>
+      <div class="row"><span class="muted" style="font-size:18px">🔍</span>${joined?'<button class="btn ghost small">+ Add Members</button>':''}${action}<span class="muted" style="font-size:18px">↗</span><span class="muted" style="font-size:18px">⋯</span></div></div>
+    <div class="tabs" role="tablist">${tabs.map(t=>`<button role="tab" class="tab ${gtab===t?'on':''}" data-gtab="${t}" aria-selected="${gtab===t}">${t}</button>`).join('')}</div></div></section>
+  <div class="gbody"><div>${body}</div>${aside}</div>`;
+}
+const V={
+  home:{h:()=>{
+    const pinned=posts.filter(p=>p.pin), rest=posts.filter(p=>!p.pin);
+    return `<h1 style="margin-bottom:4px">Community</h1><p class="muted" style="margin:0 0 16px">Latest posts from your groups.</p>
+    <div class="gbody" style="margin-top:0"><div>${composer('Members can post in Members Lounge only.')}<div class="feed">${pinned.concat(rest).map(p=>postCard(p,true)).join('')}</div></div>
+    <aside class="card pad stack" style="gap:14px"><div style="border-bottom:1px solid var(--line);padding-bottom:10px;color:var(--muted);font-size:14px">🔍 Search</div>
+      <b>My Groups</b>
+      ${[['Open Forum','🌐 412 members','group-open'],['Members Lounge','🔒 236 members','group-lounge']].map(g=>`<div class="mini" data-go="${g[2]}" style="cursor:pointer"><div class="sq img"></div><div>${g[0]}<span>${g[1]}</span></div></div>`).join('')}
+      <b style="border-top:1px solid var(--line);padding-top:12px">Suggested Groups</b>
+      <div class="mini"><div class="sq img"></div><div style="flex:1">Inner Circle<span>💲 58 members</span><button class="btn ghost small" data-go="plans" style="margin-top:6px">Join</button></div></div>
+    </aside></div>`;}},
+  'group-open':{h:()=>group('Open Forum','Public','Open to everyone. Free essays, notes and announcements from Sam.',true,412)},
+  'group-lounge':{h:()=>group('Members Lounge','Private','For everyone with a free account. Discussions, introductions and community Q&A.',true,236,false,true)},
+  'group-inner':{h:()=>group('Inner Circle','Paid','Paid group with member-only posts, case studies and session recordings.',false,58,true)},
+  events:{h:()=>`<h1 style="margin-bottom:14px">Events</h1><div class="chips" style="margin-top:0"><button class="chip" aria-pressed="true">Upcoming</button><button class="chip" aria-pressed="false">Past</button></div><div class="stack">${events.map(e=>`<div class="card ev"><div class="date"><b>${e[0]}</b>${e[1]}</div><div><b>${e[2]}</b><div class="muted">${e[3]}</div></div><button class="btn ${e[4]==='Register'?'':'ghost'} small" ${e[4]==='Register'?'':'data-go="plans"'}>${e[4]==='Register'?'Register':'🔒 Paid members only'}</button></div>`).join('')}</div>`},
+  courses:{h:()=>`<h1 style="margin-bottom:14px">Courses</h1><div class="grid">
+    <article class="card" style="overflow:hidden"><div class="img" style="height:130px;border-radius:0">Course cover</div><div class="pad stack"><div class="row between"><h2>Thinking Clearly: a 5-day starter</h2><span class="badge">Free</span></div><p class="muted" style="margin:0">Five short lessons on asking better questions.</p><div class="progress"><div style="width:40%"></div></div><span class="muted">2 of 5 lessons done</span><button class="btn">Continue</button></div></article>
+    <article class="card" style="overflow:hidden"><div class="img" style="height:130px;border-radius:0">Course cover</div><div class="pad stack"><div class="row between"><h2>Decision Lab: 6-week program</h2><span class="badge paid">Member plan</span></div><p class="muted" style="margin:0">Weekly modules, exercises and a final project.</p><span class="muted">6 modules · 18 lessons</span><button class="btn accent" data-go="plans">🔒 Unlock with membership</button></div></article></div>`},
+  profile:{h:()=>`<section class="card pad stack"><div class="row" style="gap:18px"><span class="avatar lg host">SR</span><div class="stack" style="gap:6px"><h1>${HOST}</h1><span class="muted">Founder and host. Writes about thinking, learning and decisions.</span><div class="row"><span class="badge paid">Host</span></div></div><button class="btn" data-go="messages" style="margin-left:auto">Message</button></div><div class="meta"><span>Groups: Open Forum · Members Lounge · Inner Circle</span></div></section>`},
+  book:{h:()=>{
+    const cats=['One-to-One Sessions','Group Programs','Weekly Classes','Membership Classes'];
+    const svcs=[
+      ['Consultation','One-to-One Sessions','1 hr · Online or in person','€95','Book now'],
+      ['Offline Appointment','One-to-One Sessions','30 min · In person','€45','Book now'],
+      ['Corporate Seminar','Group Programs','6 sessions · Starts 4 Nov · 8 spots left','€480','Book now'],
+      ['Group Courses','Group Programs','6 weeks · Starts 4 Nov · 12 spots left','€240','Book now'],
+      ['Offline Booking Class','Weekly Classes','Mon–Fri · Duration varies · In person','€25','Book now'],
+      ['Online Class','Weekly Classes','Tue–Fri · 1 hr · Online','€20','Book now'],
+      ['Recurring Class','Membership Classes','Mon & Tue · 1 hr','€18','Book now','Explore plans']];
+    const shown=svcs.filter(x=>bookCat==='all'||x[1]===bookCat);
+    return `<h1 style="margin-bottom:6px">Book a session</h1><p class="muted" style="margin:0 0 14px">All consultations, programs and classes in one place. Categories match the four Services pages.</p>
+    <div class="chips" style="margin-top:0"><button class="chip" data-cat="all" aria-pressed="${bookCat==='all'}">All (${svcs.length})</button>${cats.map(c=>`<button class="chip" data-cat="${c}" aria-pressed="${bookCat===c}">${c}</button>`).join('')}</div>
+    <div class="grid">${shown.map(x=>`<article class="card" style="overflow:hidden"><div class="img" style="height:120px;border-radius:0">Service image</div><div class="pad stack" style="gap:8px"><span class="badge" style="align-self:flex-start">${x[1]}</span><h2>${x[0]}</h2><span class="muted">${x[2]}</span><div class="row between"><b>${x[3]}</b><button class="btn small">${x[4]}</button></div>${x[5]?`<button class="tag" data-go="plans" style="align-self:flex-start">${x[5]}</button>`:''}</div></article>`).join('')}</div>`;}},
+  messages:{h:()=>`<h1 style="margin-bottom:6px">Message Business Name</h1><p class="muted" style="margin:0 0 14px">Messages go to the Business Name team. To talk with other members, comment on posts.</p>
+    <section class="card" style="max-width:520px;display:flex;flex-direction:column"><div class="pad row" style="border-bottom:1px solid var(--line);padding:12px 18px"><span class="avatar host">SR</span><b>Business Name</b><span class="muted">· usually replies within 1 working day</span></div>
+    <div class="pad" style="display:flex;flex-direction:column;gap:10px"><div class="bubble">Hi Alex, welcome! Let us know if you have any questions.</div><div class="bubble me">Thanks! Is the Q&amp;A on the 21st recorded?</div><div class="bubble">Yes, the recording will be shared in Inner Circle.</div></div>
+    <div class="row" style="border-top:1px solid var(--line);padding:10px"><div style="flex:1;border:1px solid var(--line);border-radius:6px;padding:9px 12px;color:var(--muted);font-size:14px">Type a message…</div><button class="btn small">Send</button></div></section>`},
+  start:{h:()=>`<section class="card pad stack"><h1>Start here</h1><p class="text">Welcome to the community. This is a place to think more clearly about learning, work and decisions, with ${HOST} and members who care about the same things. Five steps to get started:</p>
+    ${[['Complete your profile','Add a photo and a short bio.','Go to profile','profile'],['Read the welcome post','What this community is about and how it works.','Read','home'],['Introduce yourself','Say hello in the Members Lounge.','Introduce yourself','intro'],['Join the Members Lounge','Free with your account.','Open group','group-lounge'],['Register for an event','Live sessions are the best place to start.','See events','events']].map((s,i)=>`<div class="li"><div><b>${i+1}. ${s[0]}</b><div class="muted">${s[1]}</div></div><button class="btn ghost small" data-go="${s[3]}">${s[2]}</button></div>`).join('')}</section>`},
+  intro:{h:()=>`<article class="card pad stack"><div class="row muted"><span class="avatar host">SR</span><span><b style="color:var(--ink)">${HOST}</b> · Host</span><span class="grp">Members Lounge</span><span class="badge pin">📌 Pinned</span></div><div class="type">Introductions</div><h2>Introduce yourself 👋</h2><p class="text">Who are you, what brings you here, and what do you want to learn this year?</p><div class="acts" style="display:flex;gap:18px;border-top:1px solid var(--line);padding-top:12px;font-size:14px;color:var(--muted)"><span>♥ 48</span><span>💬 37 comments</span></div>
+    <div class="comment"><span class="avatar" style="width:30px;height:30px;font-size:11px">LD</span><div class="body"><b>Lucas D.</b><div>Hi all, student in Utrecht. Here to get better at learning on my own.</div></div></div>
+    <div class="comment"><span class="avatar" style="width:30px;height:30px;font-size:11px">TB</span><div class="body"><b>Tom B.</b><div>Running a small design studio. Looking for better ways to decide what to take on.</div></div></div></article>`},
+  faq:{h:()=>`<section class="card pad"><h1 style="margin-bottom:10px">FAQ</h1>${[['What do I get for free?','Access to the Open Forum, the Members Lounge, the starter course and open events.'],['What does the Member plan include?','Inner Circle, all courses, paid member events and a 15% store discount.'],['Can I cancel anytime?','Yes. Your access continues until the end of the paid period.'],['Are sessions recorded?','Yes. Recordings are shared in the Inner Circle group.']].map(q=>`<details><summary>${q[0]}</summary><p class="text">${q[1]}</p></details>`).join('')}</section>`},
+  plans:{h:()=>`<h1 style="margin-bottom:14px">Plans</h1><div class="grid">
+    <article class="card pad stack"><h2>Free</h2><div class="price">€0</div><ul class="text" style="padding-left:20px;margin:0"><li>Open Forum and Members Lounge</li><li>Starter course</li><li>Open events</li></ul><span class="badge ok" style="align-self:flex-start">Current plan</span></article>
+    <article class="card pad stack" style="border:2px solid var(--brand)"><h2>Member</h2><div class="price">€12 <span>/ month</span></div><ul class="text" style="padding-left:20px;margin:0"><li>Everything in Free</li><li>Inner Circle group</li><li>All courses</li><li>Paid member events</li><li>15% store discount</li></ul><button class="btn accent">Choose plan</button></article></div>`},
+  settings:{h:()=>`<section class="card pad"><h1 style="margin-bottom:10px">Settings</h1>${['Email me about replies to my comments','Email me about new posts in my groups','Event reminders','Show my profile in the member directory'].map((t,i)=>`<label class="li"><span>${t}</span><input type="checkbox" ${i!==1?'checked':''} style="width:18px;height:18px;accent-color:var(--brand)"></label>`).join('')}<p class="muted">Use the community on your phone with the Spaces by Wix app.</p></section>`}
+};
+function render(){
+  const v=V[view]; main.innerHTML=v.h(); railEl.innerHTML=v.rail?rail():'';
+  shell.classList.toggle('no-rail',!v.rail); renderSide();
+}
+const side=document.getElementById('side'),main=document.getElementById('main'),railEl=document.getElementById('rail'),shell=document.getElementById('shell');
+document.addEventListener('click',e=>{
+  const c=e.target.closest('[data-collapse]'); if(c){collapsed[c.dataset.collapse]=!collapsed[c.dataset.collapse];renderSide();return;}
+  const gt=e.target.closest('[data-gtab]'); if(gt){gtab=gt.dataset.gtab;render();return;}
+  const k=e.target.closest('[data-cat]'); if(k){bookCat=k.dataset.cat;render();return;}
+  const t=e.target.closest('[data-topic]'); if(t){topic=t.dataset.topic;render();return;}
+  const g=e.target.closest('[data-go]'); if(g){view=g.dataset.go;topic='all';gtab='Discussion';side.classList.remove('open');render();window.scrollTo({top:0});return;}
+  if(e.target.id==='menuBtn') side.classList.toggle('open');
+});
+render();
+</script>
+
+<footer>
+  <div class="wrap">
+    <a class="f-logo" href="../01-Public-pages/01-home.html">Business Name</a>
+    <div class="f-grid">
+      <nav aria-labelledby="f-ex"><h2 id="f-ex">Explore</h2>
+        <a href="../01-Public-pages/01-home.html">Home</a><a href="../01-Public-pages/02-about-story.html">About Us</a><a href="../01-Public-pages/00-wix-app-page.html?p=Consulting">Services</a><a href="../01-Public-pages/16-shop-final-look.html">Shop</a><a href="#top">Groups</a><a href="../01-Public-pages/00-wix-app-page.html?p=Courses">Courses</a><a href="../01-Public-pages/19-events.html">Events</a><a href="01-free-blog-posts-articles.html">Articles</a><a href="../01-Public-pages/07-campaign-work-with-us-hub.html">Work with us</a>
+      </nav>
+      <nav aria-labelledby="f-lg"><h2 id="f-lg">Legal Pages</h2>
+        <a href="../01-Public-pages/04-legal-privacy-policy.html">Privacy Policy</a><a href="../01-Public-pages/05-legal-terms-and-conditions.html">Terms &amp; Conditions</a><a href="../01-Public-pages/06-legal-cookie-notice.html">Cookie Notice</a>
+      </nav>
+      <nav aria-labelledby="f-fo"><h2 id="f-fo">Follow</h2>
+        <a href="#">LinkedIn</a><a href="#">Instagram</a><a href="#">Youtube</a>
+      </nav>
+      <form class="f-form" id="f-form" novalidate>
+        <h2 class="f-title">Find What’s Next.</h2>
+        <div class="f-field"><label for="f-name">Name *</label><input id="f-name" type="text" autocomplete="name" required></div>
+        <div class="f-field"><label for="f-email">Email *</label><input id="f-email" type="email" autocomplete="email" required></div>
+        <label class="f-check f-field"><input type="checkbox" required> <span>I agree to receive emails from [Business Name] and accept the <a href="../01-Public-pages/04-legal-privacy-policy.html">privacy policy</a>. I can unsubscribe at any time.</span></label>
+        <button class="f-btn f-field" type="submit">Subscribe</button>
+        <p class="f-done" role="status">Thanks, you’re subscribed.</p>
+      </form>
+    </div>
+    <div class="f-copy">© 2026 by Business Name · KvK [NUMBER]. Built on <a href="#">Wix Studio</a></div>
+  </div>
+</footer>
+<script>(function(){var f=document.getElementById('f-form');if(f)f.addEventListener('submit',function(e){e.preventDefault();if(!this.checkValidity()){this.reportValidity();return;}this.classList.add('sent');});})();</script>
+</body>
+</html>

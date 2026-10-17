@@ -1,0 +1,322 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Community module – developer spec</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}
+:root{--brand:#354A40;--ink:#1F2A25;--muted:#4A5751;--line:#DCE0DD;--bg:#F5F6F5;--spec:#3E35A8;--specbg:#F3F1FD;--specline:#A9A2EE;--warn:#8A4B00;--warnbg:#FFF4E0}
+body{margin:0;font-family:'DM Sans','Helvetica Neue',Arial,sans-serif;color:var(--ink);background:var(--bg)}
+button{font:inherit;cursor:pointer}
+h1,h2,h3{font-family:'Space Grotesk',sans-serif;margin:0}
+
+.rules{background:var(--spec);color:#fff;font-size:14px;line-height:1.55}
+.rules-in{padding:12px 24px;display:flex;flex-wrap:wrap;gap:6px 28px;align-items:center}
+.rules b{color:#DCD8FF}
+
+.top{background:var(--brand);color:#fff;position:sticky;top:0;z-index:20}
+.top-in{padding:10px 24px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.menu-btn{display:none;background:none;border:0;color:#fff;font-size:22px}
+.logo{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:20px;white-space:nowrap}
+.search{flex:1;max-width:520px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);color:#fff;padding:9px 14px;border-radius:6px;font-size:14px}
+.search::placeholder{color:#D7DED9}
+.top-r{margin-left:auto;display:flex;align-items:center;gap:14px}
+.ico{font-size:18px;cursor:help}
+.avatar{width:34px;height:34px;border-radius:50%;background:#C9D3CE;color:var(--brand);display:inline-flex;align-items:center;justify-content:center;font-weight:600;font-size:13px;flex:none}
+@media (max-width:760px){.search{display:none}}
+.slot{border:1.5px dashed rgba(255,255,255,.55);border-radius:6px;padding:7px 12px;font-size:13px;line-height:1.3;cursor:help}
+.slot small{display:block;opacity:.75;font-size:11px}
+.slot.grow{flex:1;min-width:200px}
+
+.shell{padding:22px 24px 22px 16px;display:grid;grid-template-columns:260px minmax(0,1fr) 300px;gap:24px;align-items:start}
+.shell.no-rail{grid-template-columns:260px minmax(0,1fr)}
+.shell.no-rail .rail{display:none}
+@media (max-width:1100px){.shell,.shell.no-rail{grid-template-columns:240px minmax(0,1fr)}.rail{grid-column:2}}
+@media (max-width:760px){
+  .shell,.shell.no-rail{grid-template-columns:1fr;padding:14px}.rail{grid-column:auto}
+  .menu-btn{display:block}
+  .side{position:fixed!important;top:56px;left:0;bottom:0;width:290px;background:#fff;z-index:15;padding:14px;overflow:auto;transform:translateX(-100%);transition:transform .2s;box-shadow:4px 0 20px rgba(0,0,0,.12)}
+  .side.open{transform:none}
+}
+
+.side{position:sticky;top:76px;display:flex;flex-direction:column;gap:12px;max-height:calc(100vh - 90px);overflow:auto}
+.side ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:1px}
+.nav{width:100%;display:flex;justify-content:space-between;align-items:center;gap:8px;padding:8px 10px;border-radius:6px;border:0;background:none;font-size:15px;text-align:left;color:var(--ink)}
+.nav:hover{background:#E8EBE9}
+.nav.on{background:#E3E8E5;font-weight:600;box-shadow:inset 4px 0 0 #B5D334}
+.nav small{font-size:11px;color:var(--muted)}
+.sec{border-top:1px solid var(--line);padding-top:10px}
+.sechead{width:100%;display:flex;justify-content:space-between;align-items:center;background:none;border:0;padding:6px 10px;border-radius:6px;font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--brand)}
+.sechead:hover{background:#E8EBE9}
+.chev{color:#9DB82A;font-size:16px;font-size:14px;transition:transform .15s}
+.sec.closed .chev{color:#9DB82A;font-size:16px;transform:rotate(-90deg)}
+.sec.closed ul{display:none}
+.navspec{font-size:12px;line-height:1.45;color:var(--spec);background:var(--specbg);border:1px dashed var(--specline);border-radius:6px;padding:8px 10px}
+
+.pagehead{background:#fff;border:1px solid var(--line);border-radius:10px;padding:18px 22px;margin-bottom:16px;display:flex;flex-direction:column;gap:10px}
+.pagehead h1{font-size:24px}
+.facts{display:flex;flex-wrap:wrap;gap:8px}
+.fact{font-size:12px;font-weight:600;padding:3px 9px;border-radius:999px;background:#E3E8E5;color:var(--muted)}
+.fact.app{background:var(--specbg);color:var(--spec)}
+.purpose{margin:0;font-size:15px;line-height:1.55;color:#3B4842}
+
+.cmp{background:var(--specbg);border:1.5px dashed var(--specline);border-radius:10px;padding:16px 18px;margin-bottom:14px}
+.cmp-h{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px;align-items:baseline;margin-bottom:8px}
+.cmp-h h3{font-size:17px;color:var(--spec)}
+.cmp-h span{font-size:12px;font-weight:600;color:var(--spec);border:1px solid var(--specline);background:#fff;padding:2px 8px;border-radius:4px}
+.cmp ul{margin:0;padding-left:18px;font-size:14px;line-height:1.6;color:#2B2560}
+.cmp li{margin-bottom:2px}
+.cmp .box{margin-top:10px;background:#fff;border:1px solid var(--specline);border-radius:6px;min-height:70px;display:flex;align-items:center;justify-content:center;font-size:13px;color:var(--muted);text-align:center;padding:12px}
+.cmp.tall .box{min-height:240px}
+.confirm{margin-top:10px;background:var(--warnbg);color:var(--warn);border:1px solid #F0C98A;border-radius:6px;padding:8px 12px;font-size:13px;line-height:1.5}
+.confirm b{color:var(--warn)}
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+.cols .cmp{margin-bottom:0}
+
+.sk{background:#fff;border:1px solid var(--line);border-radius:8px;padding:14px;margin-top:10px}
+.ln{height:9px;background:#E3E6E4;border-radius:4px;margin:6px 0}
+.ln.t{height:13px;background:#CDD3CF;width:60%}
+.ln.s{width:40%}
+.skrow{display:flex;gap:12px;align-items:center;padding:8px 0;border-top:1px solid #EEF0EF}
+.skrow:first-child{border-top:0}
+.sq{width:44px;height:44px;border-radius:6px;background:#E3E6E4;flex:none}
+.img{height:120px;background:#E3E6E4;border-radius:6px}
+.btnsk{display:inline-block;background:#B5D334;color:var(--ink);font-size:12px;font-weight:600;padding:6px 12px;border-radius:5px;margin-top:6px}
+.skgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.badge-pin{position:absolute;margin:-6px 0 0 -4px;font-size:10px;font-weight:600;background:#B5D334;padding:1px 6px;border-radius:3px}
+.skrow{position:relative}
+.rail{display:flex;flex-direction:column;gap:14px;position:sticky;top:76px}
+.legend{font-size:12px;color:var(--muted);line-height:1.5}
+.legend span{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:-2px;margin-right:4px}
+
+/* ===== STANDARD SITE HEADER (global in Wix) ===== */
+.sh{background:#354A40;color:#fff;position:sticky;top:0;z-index:30;font-family:'DM Sans','Helvetica Neue',sans-serif}
+.sh *{box-sizing:border-box}
+.sh-bar{max-width:1200px;margin:0 auto;padding:16px 32px;display:flex;flex-wrap:nowrap;align-items:center;justify-content:space-between;gap:16px}
+.sh-logo{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:24px;color:#fff;text-decoration:none;white-space:nowrap}
+.sh .sh-nav{display:flex;align-items:center;gap:26px;font-size:16px;flex-wrap:nowrap;margin:0}
+.sh .sh-nav a{color:#fff;text-decoration:none;font-size:16px;white-space:nowrap}
+.sh .sh-nav a:hover,.sh .sh-nav a[aria-current]{text-decoration:underline;text-underline-offset:6px}
+.sh .sh-nav a[aria-current]{font-weight:600}
+.sh-act{display:flex;align-items:center;gap:16px;white-space:nowrap}
+.sh-act a{color:#fff;text-decoration:none;font-size:16px}
+.sh-join{background:#B5D334;color:#1F2A25 !important;font-weight:600;font-size:14px !important;padding:12px 28px;border-radius:6px}
+.sh-ico{position:relative;font-size:18px;line-height:1;color:#fff;background:none;border:0;padding:0;cursor:pointer}
+.sh-ico .n{position:absolute;top:-7px;right:-9px;background:#B5D334;color:#1F2A25;font-size:10px;font-weight:700;border-radius:9px;padding:1px 5px}
+.sh-av{width:32px;height:32px;border-radius:50%;background:#B5D334;color:#1F2A25;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700}
+.sh-burger{display:none;background:none;border:1px solid rgba(255,255,255,.5);color:#fff;font:inherit;padding:8px 12px;cursor:pointer}
+@media (max-width:1180px){.sh .sh-nav{display:none}.sh-burger{display:inline-block}}
+@media (max-width:720px){.sh-bar{padding:12px 20px;gap:10px}.sh-logo{font-size:20px}.sh-act .sh-login{display:none}.sh-join{padding:10px 16px}}
+
+/* ===== STANDARD SITE FOOTER (global in Wix; identical on every page) ===== */
+footer{--cta:#B5D334;--ink:#1F2A25;--line-strong:#C9CECB;font-family:'DM Sans','Helvetica Neue',sans-serif;line-height:normal}
+footer .wrap{max-width:1200px;margin:0 auto;padding:0 32px;box-sizing:border-box}
+footer *{box-sizing:border-box}
+footer nav{font-size:16px;align-items:stretch;flex-wrap:nowrap;justify-content:flex-start;margin:0}
+footer h2{font-family:'Space Grotesk',sans-serif;line-height:normal}
+footer label{font-size:15px;font-weight:600;display:block;margin-bottom:6px}
+footer input[type=text],footer input[type=email]{width:100%;font:inherit;font-size:16px;color:var(--ink);background:#fff;border:1px solid var(--line-strong);padding:12px 14px;border-radius:0}
+footer .success{display:none}
+footer{background:#374A42;color:#fff}
+footer .wrap{padding-top:64px;padding-bottom:48px;display:flex;flex-direction:column;gap:56px}
+.f-logo{font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:32px;color:#fff;text-decoration:none}
+.f-grid{display:grid;grid-template-columns:1fr 1.2fr 0.8fr 1.8fr;gap:32px;align-items:start}
+.f-grid nav{display:flex;flex-direction:column;gap:12px}
+.f-grid nav h2{margin:0 0 8px;font-weight:500;font-size:24px;color:#fff}
+.f-grid nav a{color:var(--cta);text-decoration:none;font-size:18px}
+.f-grid nav a:hover{text-decoration:underline;color:var(--cta)}
+.f-form{border:2px solid #fff;border-radius:10px;padding:24px 20px;display:flex;flex-direction:column;gap:18px;background:transparent}
+.f-title{margin:0;font-weight:500;font-size:32px;color:#fff}
+.f-form label{color:#fff;font-size:16px;font-weight:500;margin-bottom:8px}
+.f-form input[type=text],.f-form input[type=email]{background:#F4F5F1;border:0;border-radius:6px;padding:16px 14px}
+.f-check a{color:#fff}
+.f-check{display:flex;gap:14px;align-items:flex-start;font-weight:400;font-size:18px;line-height:1.5;margin:0}
+.f-check input{width:22px;height:22px;margin-top:4px;accent-color:var(--cta)}
+.f-btn{background:var(--cta);color:#1F2A25;border:0;border-radius:6px;font:inherit;font-size:18px;padding:14px;cursor:pointer}
+.f-done{display:none;margin:0;font-size:17px}
+.f-form.sent .f-field{display:none}.f-form.sent .f-done{display:block}
+.f-copy{font-size:16px}
+.f-copy a{color:#fff}
+@media (max-width:1080px){footer .f-grid{grid-template-columns:1fr 1fr}footer .f-form{grid-column:1/-1}}
+@media (max-width:720px){footer .wrap{padding-left:20px;padding-right:20px}}
+
+.cm-mbar{display:none;background:#fff;border-bottom:1px solid #DCE0DD;padding:8px 14px;position:sticky;top:56px;z-index:16}
+.cm-mbar .menu-btn{color:#1F2A25;font-size:15px;font-weight:600;background:none;border:0}
+@media (max-width:900px){.cm-mbar{display:block}}
+</style>
+</head>
+<body>
+
+<div class="rules"><div class="rules-in">
+  <span><b>Developer spec · Community module</b></span>
+  <span><b>Rule 1:</b> native Wix apps and settings only. No Velo code, no custom Automations.</span>
+  <span><b>Rule 2:</b> every nav item and page must be hideable per brand without dead links.</span>
+  <span><b>Rule 3:</b> text in [brackets] is owner content, added per brand after duplication.</span>
+</div></div>
+
+<!-- Standard site header (global): logo, main menu, cart icon (Wix Stores), Members login bar (logged out: Log in + Join Free; logged in: notifications + avatar). -->
+<header class="sh"><div class="sh-bar">
+  <a class="sh-logo" href="../01-Public-pages/01-home.html">Business Name</a>
+  <nav class="sh-nav" aria-label="Main"><a href="../01-Public-pages/01-home.html">Home</a><a href="../01-Public-pages/02-about-story.html">About</a><a href="../01-Public-pages/00-wix-app-page.html?p=Courses">Courses</a><a href="../01-Public-pages/16-shop-final-look.html">Shop</a><a href="../01-Public-pages/00-wix-app-page.html?p=Consulting">Consulting</a><a href="../01-Public-pages/19-events.html">Events</a><a href="02-community-final-look.html" aria-current="page">Community</a><a href="../01-Public-pages/00-wix-app-page.html?p=Plans%20%26%20Pricing">Plans &amp; Pricing</a></nav>
+  <div class="sh-act"><span class="sh-ico" aria-label="Cart">🛍</span><span class="sh-ico" aria-label="Notifications">🔔<span class="n">3</span></span><span class="sh-av" aria-label="My account">AM</span><button class="sh-burger" type="button" aria-label="Open menu">Menu</button></div>
+</div></header>
+<div class="cm-mbar"><button class="menu-btn" id="menuBtn" aria-label="Open community menu">☰ Community menu</button></div>
+
+<div class="shell" id="shell">
+  <nav class="side" id="side" aria-label="Community"></nav>
+  <main id="main"></main>
+  <aside class="rail" id="rail" aria-label="Right column"></aside>
+</div>
+
+<script>
+/* ---------- left nav ---------- */
+const NAV = [
+  {items:[['home','🏠 Home'],['events','📅 Events'],['courses','🎓 Courses'],['book','📞 Book a session'],['messages','✉️ Message [Business Name]']]},
+  {key:'groups', title:'Groups', items:[['group-open','Open Forum','Public'],['group-lounge','Members Lounge','Private'],['group-inner','Inner Circle','Paid']]},
+  {key:'start', title:'Getting started', items:[['start','Start here'],['intro','Introductions'],['faq','FAQ']]},
+  {items:[['plans','💳 Plans'],['settings','⚙️ Settings']]}
+];
+let view='home', collapsed={};
+
+function renderSide(){
+  const item=([v,label,tag])=>`<li><button class="nav ${view===v?'on':''}" data-go="${v}">${label}${tag?`<small>${tag}</small>`:''}</button></li>`;
+  document.getElementById('side').innerHTML = NAV.map(s=> s.title
+    ? `<div class="sec ${collapsed[s.key]?'closed':''}"><button class="sechead" data-collapse="${s.key}" aria-expanded="${!collapsed[s.key]}"><span>${s.title}</span><span class="chev">▾</span></button><ul>${s.items.map(item).join('')}</ul></div>`
+    : `<div class="sec" style="${s===NAV[0]?'border:0;padding:0':''}"><ul>${s.items.map(item).join('')}</ul></div>`).join('') +
+    `<div class="navspec">Studio vertical menu. <b>Confirm:</b> collapsible submenus; else static section labels.</div>`;
+}
+
+/* ---------- spec helpers ---------- */
+const L=(n=2)=>'<div class="ln t"></div>'+'<div class="ln"></div>'.repeat(n-1)+'<div class="ln s"></div>';
+const SK={
+  feed:(n=3)=>`<div class="sk">${Array.from({length:n},(_,i)=>`<div class="skrow" style="align-items:flex-start;padding:12px 0">${i===0?'<span class="badge-pin">📌 Pinned</span>':''}<div class="sq" style="width:90px;height:64px"></div><div style="flex:1">${L(2)}<div class="ln s" style="width:25%"></div></div></div>`).join('')}</div>`,
+  events:(n=4)=>`<div class="sk">${Array.from({length:n},()=>`<div class="skrow"><div class="sq" style="width:40px"></div><div style="flex:1">${L(1)}</div></div>`).join('')}</div>`,
+  cards:(n=2,btn='')=>`<div class="sk skgrid">${Array.from({length:n},()=>`<div><div class="img"></div>${L(2)}${btn?`<span class="btnsk">${btn}</span>`:''}</div>`).join('')}</div>`,
+  people:(n=6)=>`<div class="sk skgrid">${Array.from({length:n},()=>`<div style="text-align:center"><div class="avatar" style="width:56px;height:56px;margin:0 auto"></div>${L(1)}</div>`).join('')}</div>`,
+  header:(btn)=>`<div class="sk" style="padding:0;overflow:hidden"><div class="img" style="border-radius:0;height:110px"></div><div style="padding:14px;display:flex;justify-content:space-between;align-items:center;gap:12px"><div style="flex:1">${L(1)}</div><span class="btnsk" style="margin:0">${btn}</span></div></div>`,
+  list:(n=4)=>`<div class="sk">${Array.from({length:n},()=>`<div class="skrow">${L(1)}</div>`).join('')}</div>`,
+  video:()=>`<div class="sk skgrid">${'<div><div class="img" style="display:flex;align-items:center;justify-content:center;font-size:24px">▶</div>'+L(1)+'</div>'}${'<div><div class="img" style="display:flex;align-items:center;justify-content:center;font-size:24px">▶</div>'+L(1)+'</div>'}${'<div><div class="img" style="display:flex;align-items:center;justify-content:center;font-size:24px">▶</div>'+L(1)+'</div>'}</div>`,
+  chat:()=>`<div class="sk" style="max-width:360px"><div class="ln t" style="width:50%"></div><div style="background:#EEF2EF;border-radius:10px;padding:10px;margin:10px 0;width:70%"><div class="ln"></div></div><div style="background:var(--brand);border-radius:10px;padding:10px;margin:10px 0 10px auto;width:60%"><div class="ln" style="background:#5F7A6C"></div></div><div style="border:1px solid var(--line);border-radius:6px;padding:8px;color:var(--muted);font-size:13px">Type a message…</div></div>`
+};
+const cmp=(name,app,visual,notes=[],confirm)=>`<section class="cmp"><div class="cmp-h"><h3>${name}</h3><span>${app}</span></div>${visual||''}${notes.length?`<ul style="margin-top:10px">${notes.map(n=>`<li>${n}</li>`).join('')}</ul>`:''}${confirm?`<div class="confirm"><b>Confirm:</b> ${confirm}</div>`:''}</section>`;
+const head=(title,facts)=>`<div class="pagehead"><h1>${title}</h1><div class="facts">${facts.map(f=>`<span class="fact ${f.startsWith('App:')?'app':''}">${f}</span>`).join('')}</div></div>`;
+
+const RAIL_UNUSED = cmp('Upcoming events','Wix Events · Event List',SK.events(4),['Compact layout, next 4 events, "All events" link.'])
+  + cmp('Recent articles','Wix Blog · Recent Posts widget',SK.events(4),['Latest 4 blog posts, title + date + reading time. "All articles" links to the Blog page.','No group posts here: those are already in the feed.']);
+
+/* ---------- views ---------- */
+const VIEWS = {
+home:{html:()=>head('Community Home',['App: Wix Groups','Groups Feed page (native)','Everyone']) +
+  `<div class="cols" style="grid-template-columns:minmax(0,2fr) minmax(220px,1fr)">`+
+  cmp('Groups Feed','Wix Groups · Groups Feed',`<div class="sk" style="display:flex;gap:10px;align-items:center"><div class="avatar" style="width:30px;height:30px"></div><div class="ln" style="flex:1;height:28px"></div><span class="btnsk" style="margin:0">Create a Post</span></div>`+SK.feed(3),[
+    'Native layout: composer (Share something / Create a Post, Photo · Video · GIF) and post cards with reactions, comments, views.',
+    'Source: all groups. Host pins the featured piece and the "Start here" post.',
+    'No topic chips on this page; topics are used inside each group.'])+
+  cmp('Feed sidebar','Wix Groups · Groups Feed sidebar',SK.list(1)+SK.events(3),['Native: Search, My Groups, Suggested Groups with Join.','<b>Switch off:</b> "Create Group" for members.'])+
+  `</div>` +
+  `<div class="confirm"><b>Not on this page:</b> Upcoming events and Recent articles were dropped. Events and Blog are reached from the menu.</div>`},
+
+'group-open':{ html:()=>groupView('Open Forum','Public','Join group',['Privacy: Public. Anyone reads; sign-up needed to comment.','Posting: admins only (host). Members comment.'])},
+'group-lounge':{ html:()=>groupView('Members Lounge','Private','Join group',['Privacy: Private, auto-approve join requests (free sign-up zone).','Topic "Introductions" + pinned prompt post.','Posting: all members can create posts (questions, introductions, discussions). Moderate with native Groups tools.'])},
+'group-inner':{ html:()=>groupView('Inner Circle','Paid','Join – see plans',['Privacy: Private, paid group linked to the Member pricing plan.','Posting: admins only (host). Members comment.','Paid content and session recordings are posted here (recordings appear in the Media tab).'],'non-members see the group description and Join button (not hidden), and the "who can post" setting (admins only vs all members) exists per group.')},
+
+events:{html:()=>head('Events',['App: Wix Events','Everyone']) +
+  cmp('Event list','Wix Events · Event List',SK.events(5),['Upcoming and past events.']) +
+  cmp('Event page','Wix Events · Event Details + Registration',SK.header('Register'),['Free sessions: RSVP. Paid sessions: tickets. Online via Zoom or Wix Video live.'],
+    'native way to limit selected events to paid plan holders (label: "Paid members only"); free members can attend free events. Otherwise use paid tickets.')},
+
+courses:{html:()=>head('Courses',['App: Wix Online Programs','Everyone']) +
+  cmp('Program list','Wix Online Programs',SK.cards(2,'Start'),['Template examples: one free program, one paid program linked to the Member plan.'])},
+
+profile:{html:()=>head('Member profile',['App: Wix Members Area','Logged-in members']) +
+  cmp('Profile page','Wix Members Area · Profile',SK.header('Message'),['Reached by clicking a name in a post, comment or a group\'s Members tab. No site-wide member directory.','Badges: Host, Founding member, Inner Circle (assigned manually).','Message button on the host profile only (Smart Chat).'])},
+
+messages:{html:()=>head('Message [Business Name]',['App: Wix Smart Chat','Logged-in members','Not a page']) +
+  cmp('Smart Chat window','Wix Smart Chat',SK.chat(),[
+    'Install in the master template. Nav item opens the chat window.',
+    'Member ↔ business only. No member-to-member chat.',
+    'AI auto-reply off by default. Set an away message.',
+    'Messages go to the Wix Inbox.'],
+    'Smart Chat can be opened from a nav link and limited to members. Fallback: members-only page with a Wix Forms contact form.')},
+
+book:{html:()=>head('Book a session',['App: Wix Bookings','Everyone']) +
+  cmp('Service list','Wix Bookings · Service List widget',SK.cards(7,'Book now'),[
+    'Shows all 7 template services with a category filter. Categories = the 4 Services pages: One-to-One Sessions, Group Programs, Weekly Classes, Membership Classes.',
+    'Cards link to the existing native Bookings service pages from the Services section. No duplicate pages.'])},
+
+start:{html:()=>head('Start here',['Studio page','Everyone']) +
+  cmp('Welcome + 5 steps','Static text and buttons',SK.list(5),['Profile → Welcome post → Introduce yourself → Join Members Lounge → Register for an event.','No checklist or progress tracking.'])},
+
+intro:{html:()=>head('Introductions',['App: Wix Groups','Link only']) +
+  cmp('Introductions','Topic in Members Lounge',SK.feed(2),['Nav item links to the pinned prompt post in Members Lounge.'])},
+
+faq:{html:()=>head('FAQ',['App: Wix FAQ','Everyone']) + cmp('FAQ','Wix FAQ',SK.list(5),['Categories: Membership, Events, Courses, Billing.'])},
+
+
+plans:{html:()=>head('Plans',['App: Wix Pricing Plans','Everyone']) +
+  cmp('Plans & Pricing','Wix Pricing Plans',SK.cards(2,'Choose'),[
+    'Free (€0): Members Lounge, free program, free events.',
+    'Member ([€X]/month): Inner Circle, paid program, paid member events, [X]% store discount.'],
+    'native way to apply the store discount for plan holders.')},
+
+settings:{html:()=>head('Settings',['App: Wix Members Area','Logged-in members']) +
+  cmp('Member settings','Wix Members Area · Settings',SK.list(4),['Native notification and email settings. No custom digests.','Optional "Get the app" link (Spaces by Wix).'])}
+};
+
+function groupView(name,privacy,btn,notes,confirm){
+  const tabs=`<div class="sk" style="display:flex;gap:18px;padding:12px 14px;font-size:13px;color:var(--muted)"><b style="color:var(--ink);border-bottom:3px solid #B5D334;padding-bottom:4px">Discussion</b><span>Media</span><span>Files</span><span>Members</span><span>About</span></div>`;
+  return head(name,['App: Wix Groups','Group page (native)','Privacy: '+privacy]) +
+  cmp('Group header','Wix Groups · group page header',`<div class="muted" style="font-size:13px;margin-top:8px">Breadcrumb: Home › Groups › ${name}</div>`+SK.header(btn)+tabs,
+    ['Native header: breadcrumb, cover, name, privacy + member count, search, Add Members / Join, share, more menu.','Tabs: <b>Discussion, Media, Files, Members, About</b>.','<b>Switch off</b> the group tabs Events, FAQs and Services: these stay site-wide in the menu.']) +
+  `<div class="cols" style="grid-template-columns:minmax(0,2fr) minmax(220px,1fr)">`+
+  cmp('Discussions tab','Wix Groups · group feed',SK.feed(3),notes.concat(['Same topic set in every group: [#topic-1], [#topic-2], [#topic-3].']),confirm)+
+  cmp('Group sidebar','Wix Groups · group page sidebar',SK.list(2)+SK.events(4),['Native: "Get started in the group" checklist, Members box with Follow.'])+
+  `</div>`;
+}
+
+/* ---------- render ---------- */
+function render(){
+  const v=VIEWS[view];
+  document.getElementById('main').innerHTML=v.html();
+  document.getElementById('rail').innerHTML=v.rail?RAIL_UNUSED+`<p class="legend"><span style="background:var(--specbg);border:1px dashed var(--specline)"></span>Wix component &nbsp; <span style="background:var(--warnbg);border:1px solid #F0C98A"></span>Confirm before building</p>`:'';
+  document.getElementById('shell').classList.toggle('no-rail',!v.rail);
+  renderSide();
+}
+document.addEventListener('click',e=>{
+  const c=e.target.closest('[data-collapse]'); if(c){collapsed[c.dataset.collapse]=!collapsed[c.dataset.collapse]; renderSide(); return;}
+  const g=e.target.closest('[data-go]'); if(g){view=g.dataset.go; document.getElementById('side').classList.remove('open'); render(); window.scrollTo({top:0}); return;}
+  if(e.target.id==='menuBtn') document.getElementById('side').classList.toggle('open');
+});
+render();
+</script>
+
+<footer>
+  <div class="wrap">
+    <a class="f-logo" href="../01-Public-pages/01-home.html">Business Name</a>
+    <div class="f-grid">
+      <nav aria-labelledby="f-ex"><h2 id="f-ex">Explore</h2>
+        <a href="../01-Public-pages/01-home.html">Home</a><a href="../01-Public-pages/02-about-story.html">About Us</a><a href="../01-Public-pages/00-wix-app-page.html?p=Consulting">Services</a><a href="../01-Public-pages/16-shop-final-look.html">Shop</a><a href="02-community-final-look.html">Groups</a><a href="../01-Public-pages/00-wix-app-page.html?p=Courses">Courses</a><a href="../01-Public-pages/19-events.html">Events</a><a href="01-free-blog-posts-articles.html">Articles</a><a href="../01-Public-pages/07-campaign-work-with-us-hub.html">Work with us</a>
+      </nav>
+      <nav aria-labelledby="f-lg"><h2 id="f-lg">Legal Pages</h2>
+        <a href="../01-Public-pages/04-legal-privacy-policy.html">Privacy Policy</a><a href="../01-Public-pages/05-legal-terms-and-conditions.html">Terms &amp; Conditions</a><a href="../01-Public-pages/06-legal-cookie-notice.html">Cookie Notice</a>
+      </nav>
+      <nav aria-labelledby="f-fo"><h2 id="f-fo">Follow</h2>
+        <a href="#">LinkedIn</a><a href="#">Instagram</a><a href="#">Youtube</a>
+      </nav>
+      <form class="f-form" id="f-form" novalidate>
+        <h2 class="f-title">Find What’s Next.</h2>
+        <div class="f-field"><label for="f-name">Name *</label><input id="f-name" type="text" autocomplete="name" required></div>
+        <div class="f-field"><label for="f-email">Email *</label><input id="f-email" type="email" autocomplete="email" required></div>
+        <label class="f-check f-field"><input type="checkbox" required> <span>I agree to receive emails from [Business Name] and accept the <a href="../01-Public-pages/04-legal-privacy-policy.html">privacy policy</a>. I can unsubscribe at any time.</span></label>
+        <button class="f-btn f-field" type="submit">Subscribe</button>
+        <p class="f-done" role="status">Thanks, you’re subscribed.</p>
+      </form>
+    </div>
+    <div class="f-copy">© 2026 by Business Name · KvK [NUMBER]. Built on <a href="#">Wix Studio</a></div>
+  </div>
+</footer>
+<script>(function(){var f=document.getElementById('f-form');if(f)f.addEventListener('submit',function(e){e.preventDefault();if(!this.checkValidity()){this.reportValidity();return;}this.classList.add('sent');});})();</script>
+</body>
+</html>
