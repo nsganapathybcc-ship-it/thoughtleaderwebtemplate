@@ -1,0 +1,360 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Product page – physical (Template Sample)</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}
+:root{--brand:#354A40;--accent:#B5D334;--ink:#1F2A25;--muted:#4A5751;--line:#DCE0DD;--red:#D0021B}
+body{margin:0;font-family:'DM Sans','Helvetica Neue',Arial,sans-serif;color:var(--ink);background:#fff}
+button{font:inherit;cursor:pointer}
+h1,h2{font-family:'Space Grotesk',sans-serif;margin:0}
+
+.legend{background:#FFF1F2;border-bottom:1px solid #F3C1C6;font-size:14px;line-height:1.5;padding:12px 32px}
+.tag{display:inline-block;background:var(--red);color:#fff;font-size:12px;font-weight:600;line-height:1.3;padding:4px 8px;border-radius:3px}
+.chg{outline:2px dashed var(--red);outline-offset:6px;position:relative}
+.tag-abs{position:absolute;top:-32px;left:-6px;white-space:nowrap;z-index:2}
+@media (max-width:900px){.tag-abs{white-space:normal;max-width:90vw}}
+.removed{border:2px dashed var(--red);color:var(--red);background:#FFF7F8;font-size:13px;padding:10px 12px;margin-top:6px}
+
+header{background:var(--brand);color:#fff}
+.hd{padding:16px 32px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px}
+.logo{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:24px}
+nav{display:flex;flex-wrap:wrap;gap:22px;align-items:center;font-size:18px}
+nav a{color:#fff;text-decoration:none}
+nav a.on{text-decoration:underline;text-underline-offset:6px}
+.join{background:var(--accent);color:var(--ink)!important;font-size:13px;font-weight:600;padding:10px 60px;border-radius:6px}
+
+main{padding:64px 48px 80px;max-width:1500px}
+.top{margin-bottom:46px;display:flex;flex-direction:column;gap:8px}
+h1{font-size:38px}
+.intro{margin:0;color:var(--muted);font-size:16px;max-width:640px}
+
+.layout{display:grid;grid-template-columns:200px 1fr;gap:40px;align-items:start}
+.side h3{font-size:17px;font-weight:500;margin:0 0 10px;padding-bottom:12px;border-bottom:1px solid #C9CECB}
+.cats{list-style:none;margin:0 0 40px;padding:0}
+.cats button{display:block;width:100%;text-align:left;background:none;border:0;padding:7px 10px;font-size:14px;color:var(--ink);border-radius:4px}
+.cats button.on{font-weight:600;background:#F1F3F2;box-shadow:inset 3px 0 0 var(--accent)}
+.price-f{display:flex;justify-content:space-between;font-size:14px;padding:10px 0;border-bottom:1px solid #C9CECB}
+.filterbtn{display:none}
+
+.bar{display:flex;justify-content:space-between;align-items:center;font-size:13px;color:var(--muted);margin-bottom:14px}
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:22px}
+@media (max-width:1200px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.card{display:flex;flex-direction:column;gap:6px}
+.media{position:relative;aspect-ratio:1/1;overflow:hidden;border-radius:2px}
+.media .a,.media .b{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:13px;color:#4A5751;transition:opacity .25s}
+.media .b{opacity:0}
+.card:hover .media .b{opacity:1}
+.ribbon{position:absolute;top:10px;left:10px;background:var(--accent);color:var(--ink);font-size:12px;font-weight:600;padding:3px 9px;border-radius:3px;z-index:1}
+.qv{position:absolute;left:50%;bottom:14px;transform:translate(-50%,8px);opacity:0;transition:all .2s;background:#fff;color:var(--ink);border:1px solid var(--line);padding:8px 16px;border-radius:4px;font-size:13px;font-weight:600;z-index:1}
+.card:hover .qv,.card.demo .qv{opacity:1;transform:translate(-50%,0)}
+.card.demo .media .b{opacity:1}
+.name{font-size:15px;margin-top:6px}
+.price{font-size:15px}
+.price s{color:var(--muted);margin-right:6px}
+.atc{align-self:flex-start;background:var(--accent);color:var(--ink);border:0;font-size:14px;padding:8px 14px;border-radius:5px;margin-top:4px}
+.more{display:flex;justify-content:center;margin-top:44px}
+.more button{background:#EEF6CC;border:1.5px solid var(--accent);color:var(--ink);font-weight:600;padding:12px 32px;border-radius:6px}
+
+@media (max-width:760px){
+  main{padding:40px 16px 60px}
+  .layout{grid-template-columns:1fr}
+  .side{display:none}
+  .filterbtn{display:inline-flex;gap:6px;align-items:center;border:1px solid var(--line);background:#fff;padding:9px 14px;border-radius:6px;font-size:14px}
+  .grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+  .hd nav{display:none}
+}
+
+.rowsec{margin-bottom:52px}
+.rowhead{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:14px}
+.rowhead h2{font-size:22px}
+.rowhead a{font-size:14px;color:var(--ink)}
+.slider{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(200px,1fr);gap:22px;overflow-x:auto;padding-bottom:6px}
+@media (max-width:760px){.slider{grid-auto-columns:46%}}
+.heart{position:absolute;top:8px;right:8px;width:34px;height:34px;border-radius:50%;background:#fff;border:1px solid var(--line);font-size:16px;line-height:1;z-index:1;display:flex;align-items:center;justify-content:center;padding:0}
+.heart.on{color:#C62828}
+.strip{display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between;background:var(--brand);color:#fff;border-radius:8px;padding:18px 24px;margin-bottom:56px}
+.strip b{font-family:'Space Grotesk',sans-serif;font-size:19px}
+.strip span{color:#E4EAE6;font-size:15px}
+.strip a{background:var(--accent);color:var(--ink);font-weight:600;padding:10px 20px;border-radius:6px;text-decoration:none;font-size:14px}
+.checks{display:flex;flex-direction:column;gap:8px;padding:10px 0;font-size:14px}
+.checks input{accent-color:var(--brand);margin-right:6px}
+.gridtitle{font-size:22px;margin:0 0 6px}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;align-items:center;justify-content:center;padding:20px;z-index:50}
+.modal.open{display:flex}
+.mbox{background:#fff;max-width:760px;width:100%;display:grid;grid-template-columns:1fr 1fr;gap:24px;padding:24px;border-radius:8px;position:relative}
+@media (max-width:640px){.mbox{grid-template-columns:1fr}}
+.mbox .img{aspect-ratio:1/1;display:flex;align-items:center;justify-content:center;font-size:13px;color:var(--muted)}
+.close{position:absolute;top:10px;right:12px;background:none;border:0;font-size:22px}
+.note{font-size:12px;color:var(--red);margin-top:4px}
+
+/* ===== STANDARD SITE HEADER (global in Wix) ===== */
+.sh{background:#354A40;color:#fff;position:sticky;top:0;z-index:30;font-family:'DM Sans','Helvetica Neue',sans-serif}
+.sh *{box-sizing:border-box}
+.sh-bar{max-width:1200px;margin:0 auto;padding:16px 32px;display:flex;flex-wrap:nowrap;align-items:center;justify-content:space-between;gap:16px}
+.sh-logo{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:24px;color:#fff;text-decoration:none;white-space:nowrap}
+.sh .sh-nav{display:flex;align-items:center;gap:22px;font-size:16px;flex-wrap:nowrap;margin:0}
+.sh .sh-nav a{color:#fff;text-decoration:none;font-size:16px;white-space:nowrap}
+.sh .sh-nav a:hover,.sh .sh-nav a[aria-current]{text-decoration:underline;text-underline-offset:6px}
+.sh .sh-nav a[aria-current]{font-weight:600}
+.sh-act{display:flex;align-items:center;gap:16px;white-space:nowrap}
+.sh-act a{color:#fff;text-decoration:none;font-size:16px}
+.sh-join{background:#B5D334;color:#1F2A25 !important;font-weight:600;font-size:14px !important;padding:12px 28px;border-radius:6px}
+.sh-ico{position:relative;font-size:18px;line-height:1;color:#fff;background:none;border:0;padding:0;cursor:pointer}
+.sh-ico .n{position:absolute;top:-7px;right:-9px;background:#B5D334;color:#1F2A25;font-size:10px;font-weight:700;border-radius:9px;padding:1px 5px}
+.sh-av{width:32px;height:32px;border-radius:50%;background:#B5D334;color:#1F2A25;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700}
+.sh-burger{display:none;background:none;border:1px solid rgba(255,255,255,.5);color:#fff;font:inherit;padding:8px 12px;cursor:pointer}
+@media (max-width:1240px){.sh .sh-nav{display:none}.sh-burger{display:inline-block}}
+@media (max-width:720px){.sh-bar{padding:12px 20px;gap:10px}.sh-logo{font-size:20px}.sh-act .sh-login{display:none}.sh-join{padding:10px 16px}}
+
+/* ===== STANDARD SITE FOOTER (global in Wix; identical on every page) ===== */
+footer{--cta:#B5D334;--ink:#1F2A25;--line-strong:#C9CECB;font-family:'DM Sans','Helvetica Neue',sans-serif;line-height:normal}
+footer .wrap{max-width:1200px;margin:0 auto;padding:0 32px;box-sizing:border-box}
+footer *{box-sizing:border-box}
+footer nav{font-size:16px;align-items:stretch;flex-wrap:nowrap;justify-content:flex-start;margin:0}
+footer h2{font-family:'Space Grotesk',sans-serif;line-height:normal}
+footer label{font-size:15px;font-weight:600;display:block;margin-bottom:6px}
+footer input[type=text],footer input[type=email]{width:100%;font:inherit;font-size:16px;color:var(--ink);background:#fff;border:1px solid var(--line-strong);padding:12px 14px;border-radius:0}
+footer .success{display:none}
+footer{background:#374A42;color:#fff}
+footer .wrap{padding-top:64px;padding-bottom:48px;display:flex;flex-direction:column;gap:56px}
+.f-logo{font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:32px;color:#fff;text-decoration:none}
+.f-grid{display:grid;grid-template-columns:1fr 1.2fr 0.8fr 1.8fr;gap:32px;align-items:start}
+.f-grid nav{display:flex;flex-direction:column;gap:12px}
+.f-grid nav h2{margin:0 0 8px;font-weight:500;font-size:24px;color:#fff}
+.f-grid nav a{color:var(--cta);text-decoration:none;font-size:18px}
+.f-grid nav a:hover{text-decoration:underline;color:var(--cta)}
+.f-form{border:2px solid #fff;border-radius:10px;padding:24px 20px;display:flex;flex-direction:column;gap:18px;background:transparent}
+.f-title{margin:0;font-weight:500;font-size:32px;color:#fff}
+.f-form label{color:#fff;font-size:16px;font-weight:500;margin-bottom:8px}
+.f-form input[type=text],.f-form input[type=email]{background:#F4F5F1;border:0;border-radius:6px;padding:16px 14px}
+.f-check a{color:#fff}
+.f-check{display:flex;gap:14px;align-items:flex-start;font-weight:400;font-size:18px;line-height:1.5;margin:0}
+.f-check input{width:22px;height:22px;margin-top:4px;accent-color:var(--cta)}
+.f-btn{background:var(--cta);color:#1F2A25;border:0;border-radius:6px;font:inherit;font-size:18px;padding:14px;cursor:pointer}
+.f-done{display:none;margin:0;font-size:17px}
+.f-form.sent .f-field{display:none}.f-form.sent .f-done{display:block}
+.f-copy{font-size:16px}
+.f-copy a{color:#fff}
+@media (max-width:1080px){footer .f-grid{grid-template-columns:1fr 1fr}footer .f-form{grid-column:1/-1}}
+@media (max-width:720px){footer .wrap{padding-left:20px;padding-right:20px}}
+
+/* ===== PRODUCT PAGE (Wix Stores product page: one template for all products) ===== */
+main#pp-root{padding:0;max-width:none;margin:0}
+.pp{max-width:1200px;margin:0 auto;padding:24px 32px 64px}
+.pv{display:flex;gap:6px;align-items:center;font-size:13px;color:#4A5751;background:#F3F5F3;padding:8px 12px;margin-bottom:18px;width:max-content;max-width:100%}
+.pv button{border:1px solid #C9CECB;background:#fff;padding:5px 12px;font-size:13px;font-weight:600;color:#1F2A25}
+.pv button[aria-pressed=true]{background:#354A40;color:#fff;border-color:#354A40}
+.crumb{font-size:14px;color:#4A5751;margin-bottom:22px}
+.crumb a{color:#1F2A25}
+.pgrid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:56px;align-items:start}
+.gal .main{aspect-ratio:1/1;display:flex;align-items:center;justify-content:center;font-size:96px;background:#E9E3EF;position:relative}
+.gal .main .ribbon{position:absolute;top:14px;left:14px}
+.thumbs{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:10px}
+.thumbs div{aspect-ratio:1/1;background:#EEF0EE;display:flex;align-items:center;justify-content:center;font-size:12px;color:#4A5751;border:2px solid transparent}
+.thumbs div.on{border-color:#354A40}
+.info{display:flex;flex-direction:column;gap:16px}
+.info h1{font-size:34px;line-height:1.15;color:#1F2A25}
+.pprice{font-size:24px;font-weight:600}
+.pprice s{color:#4A5751;font-weight:400;font-size:18px;margin-right:8px}
+.vat{font-size:13px;color:#4A5751;font-weight:400;margin-left:6px}
+.short{margin:0;font-size:16px;line-height:1.6;color:#3B4842}
+.opt b{display:block;font-size:14px;margin-bottom:8px}
+.sizes{display:flex;flex-wrap:wrap;gap:8px}
+.sizes span{min-width:48px;text-align:center;border:1px solid #C9CECB;padding:9px 12px;font-size:14px}
+.sizes span.on{border:2px solid #354A40;font-weight:600}
+.sizes span.out{color:#B8BFBB;text-decoration:line-through}
+.sw{display:flex;gap:10px}
+.sw span{width:32px;height:32px;border-radius:50%;border:2px solid #fff;box-shadow:0 0 0 1px #C9CECB}
+.sw span.on{box-shadow:0 0 0 2px #354A40}
+.buy{display:grid;grid-template-columns:120px 1fr 52px;gap:10px;align-items:stretch}
+.qty{display:flex;border:1px solid #C9CECB;align-items:center;justify-content:space-between;padding:0 12px;font-size:16px}
+.btn-atc{background:#B5D334;color:#1F2A25;border:0;font-weight:700;font-size:16px;padding:14px;border-radius:6px}
+.btn-buy{background:#354A40;color:#fff;border:0;font-weight:600;font-size:16px;padding:14px;border-radius:6px;width:100%}
+.wish{border:1px solid #C9CECB;background:#fff;font-size:20px;border-radius:6px}
+.stock{font-size:14px;color:#354A40;font-weight:600}
+.facts{list-style:none;margin:0;padding:14px 0;border-top:1px solid #DCE0DD;border-bottom:1px solid #DCE0DD;display:flex;flex-direction:column;gap:8px;font-size:14px;color:#3B4842}
+.facts li{padding-left:24px;position:relative}
+.facts li::before{content:"✓";position:absolute;left:0;color:#354A40;font-weight:700}
+.member{background:#F3F5F3;border-left:4px solid #B5D334;padding:12px 14px;font-size:14px;line-height:1.5}
+.member a{color:#1F2A25;font-weight:600}
+details{border-bottom:1px solid #DCE0DD}
+details summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;padding:14px 0;font-weight:600;font-size:15px}
+details summary::after{content:"+";font-weight:400}
+details[open] summary::after{content:"−"}
+details p,details ul{margin:0 0 14px;font-size:15px;line-height:1.6;color:#3B4842}
+details ul{padding-left:20px}
+.share{font-size:14px;color:#4A5751;display:flex;gap:14px;align-items:center}
+.share a{color:#1F2A25}
+.desc{max-width:760px;margin-top:56px}
+.desc h2,.rel h2,.rev h2{font-size:26px;color:#354A40;margin-bottom:14px}
+.desc p{font-size:17px;line-height:1.7;color:#3B4842;margin:0 0 14px}
+.rev{margin-top:56px;max-width:760px}
+.rev .sum{display:flex;gap:16px;align-items:center;font-size:15px;color:#3B4842;margin-bottom:16px}
+.rev .stars{color:#8A6A2C;font-size:20px;letter-spacing:2px}
+.rev .r{border-top:1px solid #DCE0DD;padding:16px 0;font-size:15px;line-height:1.6;color:#3B4842}
+.rev .r b{color:#1F2A25}
+.relwrap{background:#F3F5F3}
+.rel{max-width:1200px;margin:0 auto;padding:48px 32px 64px}
+.rgrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:22px}
+.rgrid .card .media{aspect-ratio:1/1;display:flex;align-items:center;justify-content:center;font-size:48px}
+.dig .only-phys{display:none}
+.phys .only-dig{display:none}
+@media (max-width:900px){.pgrid{grid-template-columns:1fr;gap:28px}.rgrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:720px){.pp{padding:16px 20px 48px}.rel{padding:40px 20px 48px}.buy{grid-template-columns:100px 1fr 48px}.info h1{font-size:28px}}
+
+/* ===== CONSISTENCY LAYER (same on every page): type scale + buttons ===== */
+.hero h1,.bill h1{font-size:clamp(34px,4.2vw,54px)!important;line-height:1.06!important}
+.hero.about h1,.chero h1,.whero h1,.lhero h1,.bhero h1,.phd h1,.thero h1,.pintro h1,.wl-copy h1,.intro h1{font-size:clamp(30px,3.4vw,44px)!important;line-height:1.08!important}
+.head h2,.ap h2,.why .big,.cinfo h2,.outline h2,.after h2,.access h2,.mband h2{font-size:clamp(24px,2.4vw,32px)!important;line-height:1.15!important}
+.final h2{font-size:clamp(28px,3vw,40px)!important;line-height:1.1!important}
+a.btn,button.btn,span.btn{background:#B5D334!important;color:#1F2A25!important;border-radius:6px!important;border:0!important}
+a.btn:hover,button.btn:hover{background:#a3bf2b!important;color:#1F2A25!important}
+.btn.btn-line,.btn.ghost,.ev.past .btn{background:transparent!important;color:#354A40!important;border:2px solid #354A40!important}
+.btn.btn-line:hover,.btn.ghost:hover{background:#354A40!important;color:#fff!important}
+.bill .btn.btn-line,.sec.dark .btn.btn-line,.dark .btn.btn-line{color:#fff!important;border-color:#fff!important}
+
+/* menu fit with 10 items */
+@media (max-width:1440px) and (min-width:721px){.home .nav,.sh .sh-nav{gap:16px!important}.home .nav a,.sh .sh-nav a{font-size:15px!important}.home .hact,.sh-act{gap:12px!important}.home .hact .btn-lime,.sh-join{padding:11px 20px!important}}
+
+/* ===== CONSISTENCY LAYER 2: fonts, footer Explore in 2 columns, contrast, spacing ===== */
+body,button,input,select,textarea{font-family:'DM Sans','Helvetica Neue',sans-serif}
+h1,h2,h3,h4{font-family:'Space Grotesk',sans-serif}
+footer .f-grid{grid-template-columns:1.5fr .9fr .7fr 2.1fr!important;column-gap:56px!important}
+footer .f-grid nav[aria-labelledby="f-ex"]{display:block!important;columns:2;column-gap:48px}
+footer .f-grid nav[aria-labelledby="f-ex"] h2{column-span:all;margin-bottom:20px!important}
+footer .f-grid nav[aria-labelledby="f-ex"] a{display:block;margin-bottom:12px;break-inside:avoid}
+@media (max-width:1080px){footer .f-grid{grid-template-columns:1fr 1fr!important}}
+@media (max-width:720px){footer .f-grid nav[aria-labelledby="f-ex"]{grid-column:1/-1}}
+.dk .card,.dk .card h3{color:#1F2A25}
+.dk .card p,.dk .card li{color:#3B4842}
+.pad .wrap{padding-top:64px!important;padding-bottom:64px!important}
+
+/* f-title-size */ footer .f-title{font-size:26px!important;line-height:1.2} footer .f-check{font-size:16px!important}
+</style>
+</head>
+<body>
+
+
+<!-- Standard site header (global): logo, main menu, cart icon (Wix Stores), Members login bar (logged out: Log in + Join Free; logged in: notifications + avatar). -->
+<header class="sh"><div class="sh-bar">
+  <a class="sh-logo" href="01-home.html">Business Name</a>
+  <nav class="sh-nav" aria-label="Main"><a href="01-home.html">Home</a><a href="02-about-story.html">About</a><a href="../02-free-plan/01-free-blog-posts-articles.html">Articles</a><a href="21-courses.html">Courses</a><a href="16-shop-final-look.html" aria-current="page">Shop</a><a href="24-consulting.html">Consulting</a><a href="../02-free-plan/02-community-final-look.html">Community</a><a href="29-pricing.html">Pricing</a></nav>
+  <div class="sh-act"><a class="sh-login" href="00-app-log-in.html">Log in</a><a class="sh-join" href="00-app-join-free.html">Join Free</a><button class="sh-burger" type="button" aria-label="Open menu">Menu</button></div>
+</div></header>
+
+<main class="phys" id="pp-root">
+<!-- ONE Wix Stores product page template for ALL products (physical and digital). What shows depends on each product's own data:
+     options (size/colour) only appear if the product has options; info sections are chosen per product; stock line only for tracked physical stock.
+     Elements are native Wix Stores product page parts: gallery, name, price, ribbon, options, quantity, Add to Cart, Buy Now, wishlist, stock,
+     additional info sections, description, share, Related Products widget, Wix Reviews. -->
+<!-- Same Wix Stores product page template as 17b-shop-product-digital.html. Two mockups only to show both product types; Wix has ONE product page. -->
+<div class="pp">
+  <p style="font-size:13px;color:#4A5751;background:#F3F5F3;padding:8px 12px;margin:0 0 18px;display:inline-block">Mockup: physical product example. Same Wix product page template as the <a href="17b-shop-product-digital.html" style="color:#1F2A25">digital product version</a>.</p>
+  
+  <div class="crumb" role="navigation" aria-label="Breadcrumb"><a href="16-shop-final-look.html">Shop</a> › <a href="16-shop-final-look.html" class="only-phys">T-shirts</a><a href="16-shop-final-look.html" class="only-dig">Templates</a> › <span class="only-phys">[Product name]</span><span class="only-dig">[Product name]</span></div>
+
+  <div class="pgrid">
+    <div class="gal">
+      <div class="main" id="mainimg"><span class="ribbon only-phys">Sale</span><span class="ribbon only-dig">Digital</span><span class="only-phys">👕</span><span class="only-dig">📊</span></div>
+      <div class="thumbs"><div class="on">[Img 1]</div><div>[Img 2]</div><div>[Img 3]</div><div class="only-phys">[Size chart]</div><div class="only-dig">[Inside page]</div><div>[Video]</div></div>
+    </div>
+
+    <div class="info">
+      <h1>[Product name]</h1>
+      <div class="pprice"><s class="only-phys">€[XX.XX]</s>€[XX.XX]<span class="vat">incl. VAT</span></div>
+      <p class="short">[One or two sentences: what it is and who it's for.]</p>
+
+      <div class="opt only-phys"><b>Colour: [Forest]</b><div class="sw"><span class="on" style="background:#354A40"></span><span style="background:#E7E1D6"></span><span style="background:#1F2A25"></span></div></div>
+      <div class="opt only-phys"><b>Size</b><div class="sizes"><span>S</span><span class="on">M</span><span>L</span><span class="out">XL</span></div></div>
+      <div class="opt only-dig"><b>Format</b><div class="sizes"><span class="on">PDF</span><span>Notion</span><span>Excel</span></div></div>
+
+      <div class="buy"><div class="qty"><span>−</span><span>1</span><span>+</span></div><button class="btn-atc" type="button">Add to Cart</button><button class="wish" type="button" aria-label="Add to wishlist">♡</button></div>
+      <button class="btn-buy" type="button">Buy Now</button>
+      <div class="stock only-phys">In stock · [Only 3 left in XL]</div>
+
+      <ul class="facts">
+        <li class="only-phys">Ships in [X–Y] working days · free shipping over €[XX]</li>
+        <li class="only-phys">14-day returns</li>
+        <li class="only-dig">Instant download after payment, also in your account</li>
+        <li class="only-dig">[File type, e.g. PDF, 24 pages]</li>
+        <li>Secure checkout</li>
+      </ul>
+
+      <div class="member">Members save [X]% on everything in the shop. <a href="29-pricing.html">See plans</a></div>
+
+      <div>
+        <details open><summary>Details</summary>
+          <ul class="only-phys"><li>[Material, e.g. 100% organic cotton]</li><li>[Fit and size advice]</li><li>[Care instructions]</li></ul>
+          <ul class="only-dig"><li>[What's included, e.g. 3 templates + guide]</li><li>[Pages / file size]</li><li>[Works with: PDF reader, Notion, Excel]</li></ul></details>
+        <details class="only-phys"><summary>Shipping &amp; returns</summary><p>[Delivery times and costs per region. Returns within 14 days of receipt; see Terms.]</p></details>
+        <details class="only-dig"><summary>Download &amp; licence</summary><p>[Download link by email and in your account. For personal use only; no resale or sharing. Digital products can't be returned once downloaded.]</p></details>
+        <details><summary>FAQ</summary><p>[One or two common questions about this product.]</p></details>
+      </div>
+
+      <div class="share">Share: <a href="#">LinkedIn</a><a href="#">WhatsApp</a><a href="#">Copy link</a></div>
+    </div>
+  </div>
+
+  <section class="desc" aria-labelledby="d-h">
+    <h2 id="d-h">About this product</h2>
+    <p>[Full description: the problem it solves, what's inside or how it's made, and how to use it. Two or three short paragraphs.]</p>
+    <p>[Optional: a link to a related article or course.]</p>
+  </section>
+
+  <!-- Wix Reviews app (free). Hide the section until the product has reviews. -->
+  <section class="rev" aria-labelledby="r-h">
+    <span class="scope-new" title="New to the original BQ scope (mockup annotation, do not build)">NEW</span><h2 id="r-h">Reviews</h2>
+    <div class="sum"><span class="stars">★★★★★</span><span>[4.8] · [X] reviews</span></div>
+    <div class="r"><b>[First name]</b> · ★★★★★<br>[Short review text.]</div>
+    <div class="r"><b>[First name]</b> · ★★★★☆<br>[Short review text.]</div>
+  </section>
+</div>
+
+<!-- Wix Stores "Related Products" widget: 4 products from the same category. -->
+<div class="relwrap"><section class="rel" aria-labelledby="rel-h">
+  <h2 id="rel-h">You might also like</h2>
+  <div class="rgrid">
+    <article class="card"><div class="media" style="background:#E7E1D6">📓</div><div class="name">[Product name]</div><div class="price">€[XX.XX]</div></article>
+    <article class="card"><div class="media" style="background:#E3E8E5">🗂</div><div class="name">[Product name]</div><div class="price">Free</div></article>
+    <article class="card"><div class="media" style="background:#E1E8EE">📊</div><div class="name">[Product name]</div><div class="price">€[XX.XX]</div></article>
+    <article class="card"><div class="media" style="background:#EEE6DE">📕</div><div class="name">[Product name]</div><div class="price">€[XX.XX]</div></article>
+  </div>
+</section></div>
+</main>
+
+
+
+
+
+<footer>
+  <div class="wrap">
+    <a class="f-logo" href="01-home.html">Business Name</a>
+    <div class="f-grid">
+      <nav aria-labelledby="f-ex"><h2 id="f-ex">Explore</h2>
+        <a href="01-home.html">Home</a><a href="02-about-story.html">About Us</a><a href="../02-free-plan/01-free-blog-posts-articles.html">Articles</a><a href="21-courses.html">Courses</a><a href="23-library.html">Library</a><a href="24-consulting.html">Consulting</a><a href="19-events.html">Events</a><a href="16-shop-final-look.html">Shop</a><a href="../02-free-plan/02-community-final-look.html">Groups</a><a href="07-campaign-work-with-us-hub.html">Work with us</a><a href="32-case-studies.html">Case studies</a>
+      </nav>
+      <nav aria-labelledby="f-lg"><h2 id="f-lg">Legal Pages</h2>
+        <a href="04-legal-privacy-policy.html">Privacy Policy</a><a href="05-legal-terms-and-conditions.html">Terms &amp; Conditions</a><a href="06-legal-cookie-notice.html">Cookie Notice</a>
+      </nav>
+      <nav aria-labelledby="f-fo"><h2 id="f-fo">Follow</h2>
+        <a href="#">LinkedIn</a><a href="#">Instagram</a><a href="#">Youtube</a>
+      </nav>
+      <form class="f-form" id="f-form" novalidate>
+        <h2 class="f-title">Get new ideas by email</h2>
+        <div class="f-field"><label for="f-name">Name *</label><input id="f-name" type="text" autocomplete="name" required></div>
+        <div class="f-field"><label for="f-email">Email *</label><input id="f-email" type="email" autocomplete="email" required></div>
+        <label class="f-check f-field"><input type="checkbox" required> <span>I agree to receive emails from [Business Name] and accept the <a href="04-legal-privacy-policy.html">privacy policy</a>. I can unsubscribe at any time.</span></label>
+        <button class="f-btn f-field" type="submit">Subscribe</button>
+        <p class="f-done" role="status">Thanks, you’re subscribed.</p>
+      </form>
+    </div>
+    <div class="f-copy">© 2026 by Business Name · KvK [NUMBER]. Built on <a href="#">Wix Studio</a></div>
+  </div>
+</footer>
+<script>(function(){var f=document.getElementById('f-form');if(f)f.addEventListener('submit',function(e){e.preventDefault();if(!this.checkValidity()){this.reportValidity();return;}this.classList.add('sent');});})();</script>
+</body>
+</html>
