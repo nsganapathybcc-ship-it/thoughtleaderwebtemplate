@@ -521,6 +521,10 @@ footer .f-grid nav[aria-labelledby="f-ex"] a{display:block;margin-bottom:12px;br
 .scope-banner{max-width:1200px;margin:16px auto 0;padding:10px 14px;border:1px solid #D0021B;background:#FFF5F6;color:#B00018;font:500 14px/1.5 'DM Sans',sans-serif;border-radius:4px}
 .scope-wrap{padding:0 32px}
 @media (max-width:720px){.scope-wrap{padding:0 20px}}
+
+/* header full width: logo at the far left, actions at the far right */
+.home header .wrap.hbar,.sh-bar{max-width:none!important;padding-left:32px!important;padding-right:32px!important}
+@media (max-width:720px){.home header .wrap.hbar,.sh-bar{padding-left:20px!important;padding-right:20px!important}}
 </style>
 </head>
 <body>
@@ -531,7 +535,7 @@ footer .f-grid nav[aria-labelledby="f-ex"] a{display:block;margin-bottom:12px;br
   <div class="wrap hbar">
     <a class="logo" href="../01-public-pages/01-home.html">Business Name</a>
     <nav class="nav" aria-label="Main">
-      <a href="../01-public-pages/01-home.html">Home</a><a href="../01-public-pages/02-about-story.html">About</a><a href="01-free-blog-posts-articles.html" aria-current="page">Articles</a><a href="../01-public-pages/21-courses.html">Courses</a><a href="../01-public-pages/16-shop-final-look.html">Shop</a><a href="../01-public-pages/24-consulting.html">Consulting</a><a href="02-community-final-look.html">Community</a><a href="../01-public-pages/29-pricing.html">Pricing</a>
+      <a href="../01-public-pages/01-home.html">Home</a><a href="../01-public-pages/02-about-story.html">About</a><a href="01-free-blog-posts-articles.html" aria-current="page">Articles</a><a href="../01-public-pages/21-courses.html">Courses</a><a href="../01-public-pages/34-app.html">App</a><a href="../01-public-pages/16-shop-final-look.html">Shop</a><a href="../01-public-pages/24-consulting.html">Consulting</a><a href="02-community-final-look.html">Community</a><a href="../01-public-pages/29-pricing.html">Pricing</a>
     </nav>
     <div class="hact">
       <a class="login" href="../01-public-pages/00-app-log-in.html">Log in</a>
@@ -631,5 +635,6 @@ footer .f-grid nav[aria-labelledby="f-ex"] a{display:block;margin-bottom:12px;br
 })();
 document.getElementById('f-form').addEventListener('submit',function(e){e.preventDefault();if(!this.checkValidity()){this.reportValidity();return;}this.classList.add('sent');});
 </script>
+<script src="../brandkit.js"></script>
 </body>
 </html>

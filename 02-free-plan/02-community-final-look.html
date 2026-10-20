@@ -201,6 +201,10 @@ footer .f-grid nav[aria-labelledby="f-ex"] a{display:block;margin-bottom:12px;br
 .sechead .chev{color:#354A40!important}
 
 /* f-title-size */ footer .f-title{font-size:26px!important;line-height:1.2} footer .f-check{font-size:16px!important}
+
+/* header full width: logo at the far left, actions at the far right */
+.home header .wrap.hbar,.sh-bar{max-width:none!important;padding-left:32px!important;padding-right:32px!important}
+@media (max-width:720px){.home header .wrap.hbar,.sh-bar{padding-left:20px!important;padding-right:20px!important}}
 </style>
 </head>
 <body>
@@ -209,7 +213,7 @@ footer .f-grid nav[aria-labelledby="f-ex"] a{display:block;margin-bottom:12px;br
 <!-- Standard site header (global): logo, main menu, cart icon (Wix Stores), Members login bar (logged out: Log in + Join Free; logged in: notifications + avatar). -->
 <header class="sh"><div class="sh-bar">
   <a class="sh-logo" href="../01-public-pages/01-home.html">Business Name</a>
-  <nav class="sh-nav" aria-label="Main"><a href="../01-public-pages/01-home.html">Home</a><a href="../01-public-pages/02-about-story.html">About</a><a href="01-free-blog-posts-articles.html">Articles</a><a href="../01-public-pages/21-courses.html">Courses</a><a href="../01-public-pages/16-shop-final-look.html">Shop</a><a href="../01-public-pages/24-consulting.html">Consulting</a><a href="#top" aria-current="page">Community</a><a href="../01-public-pages/29-pricing.html">Pricing</a></nav>
+  <nav class="sh-nav" aria-label="Main"><a href="../01-public-pages/01-home.html">Home</a><a href="../01-public-pages/02-about-story.html">About</a><a href="01-free-blog-posts-articles.html">Articles</a><a href="../01-public-pages/21-courses.html">Courses</a><a href="../01-public-pages/34-app.html">App</a><a href="../01-public-pages/16-shop-final-look.html">Shop</a><a href="../01-public-pages/24-consulting.html">Consulting</a><a href="#top" aria-current="page">Community</a><a href="../01-public-pages/29-pricing.html">Pricing</a></nav>
   <div class="sh-act"><span class="sh-ico" aria-label="Notifications">🔔<span class="n">3</span></span><span class="sh-av" aria-label="My account">AM</span><button class="sh-burger" type="button" aria-label="Open menu">Menu</button></div>
 </div></header>
 <div class="cm-mbar"><button class="menu-btn" id="menuBtn" aria-label="Open community menu">☰ Community menu</button></div>
@@ -394,5 +398,6 @@ render();
   </div>
 </footer>
 <script>(function(){var f=document.getElementById('f-form');if(f)f.addEventListener('submit',function(e){e.preventDefault();if(!this.checkValidity()){this.reportValidity();return;}this.classList.add('sent');});})();</script>
+<script src="../brandkit.js"></script>
 </body>
 </html>
