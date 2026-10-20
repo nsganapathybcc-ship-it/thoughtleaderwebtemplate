@@ -1,0 +1,412 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Waitlist – Book (Template Sample)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --brand:#354A40; --accent:#8A6A2C; --cta:#B5D334;
+  --ink:#1F2A25; --body:#3B4842; --muted:#4A5751;
+  --line:#D6DAD7; --line-strong:#C9CECB; --placeholder:#DCE0DD;
+  --tint:#F3F5F3; --footer:#26352E; --footer-text:#D7DED9;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:'DM Sans','Helvetica Neue',sans-serif;color:var(--ink);background:#fff}
+a{color:#2F4238}a:hover{color:#1A2620}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+h1,h2,h3,.display{font-family:'Space Grotesk',sans-serif}
+.wrap{max-width:1200px;margin:0 auto;padding:0 32px}
+.narrow{max-width:860px}
+
+/* Header: logo only, no main nav (focused landing page) */
+header{background:var(--brand);color:#fff}
+header .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-top:18px;padding-bottom:18px;flex-wrap:wrap}
+.logo{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:24px;color:#fff;text-decoration:none}
+.back{color:#fff;font-size:16px}
+
+/* Intro */
+.intro .wrap{padding-top:56px;padding-bottom:48px;display:flex;flex-direction:column;gap:14px}
+.crumb{font-size:14px;color:var(--muted)}
+h1{margin:0;font-size:44px;line-height:1.1;color:var(--brand)}
+.lead{margin:0;max-width:720px;font-size:18px;line-height:1.6;color:var(--body)}
+.actions{display:flex;flex-wrap:wrap;gap:16px;align-items:center;margin-top:10px}
+.btn{display:inline-block;background:var(--accent);color:#fff;border:0;font:inherit;font-weight:600;font-size:16px;padding:14px 26px;text-decoration:none;cursor:pointer}
+.btn:hover{color:#fff;background:#745824}
+.link{font-size:16px}
+
+/* Audience */
+.audience{background:var(--tint)}
+.audience .wrap{padding-top:56px;padding-bottom:56px;display:flex;flex-direction:column;gap:28px}
+h2{margin:0;font-size:clamp(24px,2.4vw,32px);color:var(--brand)}
+.sub{margin:0;font-size:17px;line-height:1.6;color:var(--body);max-width:720px}
+.figures{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:24px}
+.figure{border-top:2px solid var(--brand);padding-top:14px}
+.figure b{display:block;font-family:'Space Grotesk',sans-serif;font-size:32px;color:var(--brand)}
+.figure span{font-size:15px;color:var(--body)}
+.who{margin:0;font-size:16px;line-height:1.6;color:var(--body)}
+
+/* Options */
+.options .wrap{padding-top:64px;padding-bottom:56px;display:flex;flex-direction:column;gap:28px}
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px}
+.card{border:1px solid var(--line-strong);padding:24px;display:flex;flex-direction:column;gap:12px}
+.card h3{margin:0;font-weight:600;font-size:20px}
+.card p{margin:0;font-size:15px;line-height:1.55;color:var(--body)}
+.card ul{margin:0;padding-left:18px;font-size:15px;line-height:1.6;color:var(--body)}
+
+.uses{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:32px}
+.use{border-top:2px solid var(--brand);padding-top:14px;display:flex;flex-direction:column;gap:8px}
+.use h3{margin:0;font-size:20px;font-weight:600}
+.use p{margin:0;font-size:16px;line-height:1.55;color:var(--body)}
+.speaker{display:grid;grid-template-columns:minmax(0,0.6fr) minmax(0,1.6fr);gap:48px;align-items:start}
+.photo{aspect-ratio:4/5;background:var(--placeholder);display:flex;align-items:center;justify-content:center;color:#46504B;font-size:14px}
+.bio{display:flex;flex-direction:column;gap:16px}
+.bio p{margin:0;font-size:17px;line-height:1.65;color:var(--body)}
+.video{aspect-ratio:16/9;background:var(--placeholder);display:flex;align-items:center;justify-content:center;color:#46504B;font-size:14px;max-width:860px}
+.wl{background:var(--tint)}
+.wl .wrap{padding-top:72px;padding-bottom:72px;display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:56px;align-items:center}
+.wl-copy{display:flex;flex-direction:column;gap:18px}
+.wl-copy .when{font-size:16px;font-weight:600;color:var(--accent)}
+.wl-copy h1{font-size:52px}
+.perks{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:10px}
+.perks li{position:relative;padding-left:26px;font-size:17px;line-height:1.5;color:var(--body)}
+.perks li::before{content:"";position:absolute;left:0;top:8px;width:12px;height:12px;background:var(--cta);border-radius:50%}
+form#wl-form{grid-template-columns:1fr}
+.share{display:flex;gap:16px;flex-wrap:wrap;font-size:15px;margin-top:10px}
+.media{background:var(--placeholder);display:flex;align-items:center;justify-content:center;color:#46504B;font-size:14px}
+.split{display:grid;grid-template-columns:minmax(0,0.8fr) minmax(0,1.2fr);gap:48px;align-items:start}
+.list{margin:0;padding-left:22px;display:flex;flex-direction:column;gap:12px;font-size:17px;line-height:1.55;color:var(--body)}
+.list b{color:var(--ink)}
+.meta{display:flex;flex-wrap:wrap;gap:8px 28px;font-size:16px;color:var(--ink)}
+.meta span b{font-weight:600}
+.prefill input{background:var(--tint);color:var(--ink);font-weight:600}
+.sec .wrap{padding-top:64px;padding-bottom:64px;display:flex;flex-direction:column;gap:28px}
+.sec.alt{background:var(--tint)}
+.pre{font-size:15px;font-weight:600;color:var(--brand);margin:0}
+.pre span{border-bottom:2px solid var(--cta)}
+.wl-copy h1{font-size:46px;line-height:1.1}
+.formcol{display:flex;flex-direction:column;gap:12px}
+.offer{font-size:17px;line-height:1.5;color:var(--ink);font-weight:500}
+.offer b{color:var(--brand)}
+.proofline{font-size:15px;color:var(--muted);margin:0}
+.pains{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
+.pain{font-family:'Space Grotesk',sans-serif;font-size:20px;line-height:1.45;color:#fff}
+.quotes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
+.quote{border:1px solid var(--line-strong);padding:24px;display:flex;flex-direction:column;gap:14px;background:#fff}
+.quote p{margin:0;font-size:17px;line-height:1.6;color:var(--ink)}
+.quote span{font-size:14px;color:var(--muted)}
+.excerpt{border-left:3px solid var(--brand);padding:8px 0 8px 24px;font-size:19px;line-height:1.7;color:var(--ink);max-width:720px;margin:0}
+.final{border-top:1px solid var(--line)}
+.final .wrap{padding-top:64px;padding-bottom:72px;display:flex;flex-direction:column;align-items:flex-start;gap:16px}
+.final h2{font-size:34px}
+.lede{margin:0;font-size:18px;line-height:1.6;color:var(--body);max-width:720px}
+
+/* Alternating backgrounds: white hero, then green / white ... ending with the green footer */
+.wl{background:#fff !important}
+.sec.g{background:#354A40 !important;color:#fff}
+.sec.g h2{color:#fff}
+.sec.g .lede,.sec.g .sub{color:#E4EAE6}
+.sec.g .list,.sec.g .list li{color:#E4EAE6}
+.sec.g .list b{color:#fff}
+.sec.g .use{border-top-color:#B5D334}
+.sec.g .use h3{color:#fff}
+.sec.g .use p{color:#E4EAE6}
+.sec.g .media{background:#4A6357;color:#cfd8d3}
+.sec.w{background:#fff !important}
+.faq.t{background:#F3F5F3}
+.final.w2{background:#fff;border-top:0}
+.wl form:not(.f-form){box-shadow:0 0 0 1px #C9CECB}
+/* Partners */
+.partners .wrap{padding-bottom:64px;display:flex;flex-direction:column;gap:20px}
+.partners h2{font-size:24px}
+.logos{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:16px}
+.logos div{height:72px;background:var(--placeholder);display:flex;align-items:center;justify-content:center;color:#46504B;font-size:14px}
+
+/* Form */
+.inquiry{background:var(--tint)}
+.inquiry .wrap{padding-top:64px;padding-bottom:72px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.6fr);gap:56px}
+.steps{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:18px;counter-reset:s}
+.steps li{display:grid;grid-template-columns:32px 1fr;gap:12px;font-size:16px;line-height:1.55;color:var(--body);counter-increment:s}
+.steps li::before{content:counter(s);width:32px;height:32px;border-radius:50%;background:var(--brand);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:15px}
+.steps strong{display:block;color:var(--ink)}
+form:not(.f-form){background:#fff;border:1px solid var(--line-strong);padding:32px;display:grid;grid-template-columns:1fr 1fr;gap:18px 20px}
+.full{grid-column:1/-1}
+label,legend{font-size:15px;font-weight:600;display:block;margin-bottom:6px}
+.opt{font-weight:400;color:var(--muted)}
+input[type=text],input[type=email],input[type=url],input[type=date],select,textarea{width:100%;font:inherit;font-size:16px;color:var(--ink);background:#fff;border:1px solid var(--line-strong);padding:12px 14px;border-radius:0}
+textarea{min-height:120px;resize:vertical}
+fieldset{border:0;margin:0;padding:0}
+.checks{display:grid;grid-template-columns:1fr 1fr;gap:8px 16px}
+.check{display:flex;gap:10px;align-items:flex-start;font-weight:400;font-size:15px;line-height:1.5;margin:0}
+.check input{margin-top:3px;width:18px;height:18px;accent-color:var(--brand)}
+.hint{font-size:14px;color:var(--muted);margin:6px 0 0}
+.submit-row{display:flex;flex-wrap:wrap;gap:16px;align-items:center}
+.success{display:none;grid-column:1/-1;border-left:4px solid var(--brand);background:var(--tint);padding:16px 18px;font-size:16px;line-height:1.55}
+.success strong{display:block;color:var(--brand);font-family:'Space Grotesk',sans-serif;font-size:20px;margin-bottom:4px}
+form.sent .field{display:none}form.sent .success{display:block}
+
+/* FAQ */
+.faq .wrap{padding-top:80px;padding-bottom:80px;display:flex;flex-direction:column;gap:24px}
+.q{border-top:1px solid var(--line);padding:20px 0;display:flex;flex-direction:column;gap:8px}
+.q:last-child{border-bottom:1px solid var(--line)}
+.q b{font-size:18px}
+.q p{margin:0;font-size:16px;line-height:1.6;color:var(--body)}
+
+/* Contact band + footer (same as other template pages) */
+.band{background:var(--brand);color:#fff}
+.band .wrap{padding-top:64px;padding-bottom:64px;display:flex;flex-wrap:wrap;gap:24px;align-items:center;justify-content:space-between}
+.band .display{font-size:30px;font-weight:600}
+.band p{margin:8px 0 0;font-size:17px;line-height:1.6;color:#E4EAE6;max-width:640px}
+.band a.white{background:#fff;color:var(--brand);text-decoration:none;font-weight:600;font-size:16px;padding:14px 28px}
+footer{background:#374A42;color:#fff}
+footer .wrap{padding-top:64px;padding-bottom:48px;display:flex;flex-direction:column;gap:56px}
+.f-logo{font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:32px;color:#fff;text-decoration:none}
+.f-grid{display:grid;grid-template-columns:1fr 1.2fr 0.8fr 1.8fr;gap:32px;align-items:start}
+.f-grid nav{display:flex;flex-direction:column;gap:12px}
+.f-grid nav h2{margin:0 0 8px;font-weight:500;font-size:24px;color:#fff}
+.f-grid nav a{color:var(--cta);text-decoration:none;font-size:18px}
+.f-grid nav a:hover{text-decoration:underline;color:var(--cta)}
+.f-form{border:2px solid #fff;border-radius:10px;padding:24px 20px;display:flex;flex-direction:column;gap:18px;background:transparent}
+.f-title{margin:0;font-weight:500;font-size:32px;color:#fff}
+.f-form label{color:#fff;font-size:16px;font-weight:500;margin-bottom:8px}
+.f-form input[type=text],.f-form input[type=email]{background:#F4F5F1;border:0;border-radius:6px;padding:16px 14px}
+.f-check a{color:#fff}
+.f-check{display:flex;gap:14px;align-items:flex-start;font-weight:400;font-size:18px;line-height:1.5;margin:0}
+.f-check input{width:22px;height:22px;margin-top:4px;accent-color:var(--cta)}
+.f-btn{background:var(--cta);color:#1F2A25;border:0;border-radius:6px;font:inherit;font-size:18px;padding:14px;cursor:pointer}
+.f-done{display:none;margin:0;font-size:17px}
+.f-form.sent .f-field{display:none}.f-form.sent .f-done{display:block}
+.f-copy{font-size:16px}
+.f-copy a{color:#fff}
+
+@media (max-width:860px){
+  h1{font-size:34px} h2{font-size:28px}
+  .wrap{padding:0 20px}
+  .inquiry .wrap{grid-template-columns:1fr;gap:36px}
+  form{grid-template-columns:1fr;padding:22px}
+  .checks{grid-template-columns:1fr}
+  .uses{grid-template-columns:1fr;gap:24px}
+  .split{grid-template-columns:1fr;gap:28px}
+  .pains,.quotes{grid-template-columns:1fr}
+  .wl-copy h1{font-size:34px}
+  .wl .wrap{grid-template-columns:1fr;gap:36px;padding-top:48px;padding-bottom:48px}
+  .wl-copy h1{font-size:38px}
+  .speaker{grid-template-columns:1fr;gap:28px}
+  .photo{max-width:320px}
+  .f-grid{grid-template-columns:1fr 1fr}
+  .f-form{grid-column:1/-1}
+  .grid{grid-template-columns:repeat(4,78%);overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:8px}
+  .card{scroll-snap-align:start}
+}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+
+/* ===== CONSISTENCY LAYER (same on every page): type scale + buttons ===== */
+.hero h1,.bill h1{font-size:clamp(34px,4.2vw,54px)!important;line-height:1.06!important}
+.hero.about h1,.chero h1,.whero h1,.lhero h1,.bhero h1,.phd h1,.thero h1,.pintro h1,.wl-copy h1,.intro h1{font-size:clamp(30px,3.4vw,44px)!important;line-height:1.08!important}
+.head h2,.ap h2,.why .big,.cinfo h2,.outline h2,.after h2,.access h2,.mband h2{font-size:clamp(24px,2.4vw,32px)!important;line-height:1.15!important}
+.final h2{font-size:clamp(28px,3vw,40px)!important;line-height:1.1!important}
+a.btn,button.btn,span.btn{background:#B5D334!important;color:#1F2A25!important;border-radius:6px!important;border:0!important}
+a.btn:hover,button.btn:hover{background:#a3bf2b!important;color:#1F2A25!important}
+.btn.btn-line,.btn.ghost,.ev.past .btn{background:transparent!important;color:#354A40!important;border:2px solid #354A40!important}
+.btn.btn-line:hover,.btn.ghost:hover{background:#354A40!important;color:#fff!important}
+.bill .btn.btn-line,.sec.dark .btn.btn-line,.dark .btn.btn-line{color:#fff!important;border-color:#fff!important}
+
+/* ===== CONSISTENCY LAYER 2: fonts, footer Explore in 2 columns, contrast, spacing ===== */
+body,button,input,select,textarea{font-family:'DM Sans','Helvetica Neue',sans-serif}
+h1,h2,h3,h4{font-family:'Space Grotesk',sans-serif}
+footer .f-grid{grid-template-columns:1.5fr .9fr .7fr 2.1fr!important;column-gap:56px!important}
+footer .f-grid nav[aria-labelledby="f-ex"]{display:block!important;columns:2;column-gap:48px}
+footer .f-grid nav[aria-labelledby="f-ex"] h2{column-span:all;margin-bottom:20px!important}
+footer .f-grid nav[aria-labelledby="f-ex"] a{display:block;margin-bottom:12px;break-inside:avoid}
+@media (max-width:1080px){footer .f-grid{grid-template-columns:1fr 1fr!important}}
+@media (max-width:720px){footer .f-grid nav[aria-labelledby="f-ex"]{grid-column:1/-1}}
+.dk .card,.dk .card h3{color:#1F2A25}
+.dk .card p,.dk .card li{color:#3B4842}
+.pad .wrap{padding-top:64px!important;padding-bottom:64px!important}
+
+/* f-title-size */ footer .f-title{font-size:26px!important;line-height:1.2} footer .f-check{font-size:16px!important}
+
+/* ===== SCOPE ANNOTATIONS (mockup only, do not build) ===== */
+.scope-new{display:inline-block;background:#D0021B!important;color:#fff!important;font:700 11px/1 'DM Sans',sans-serif!important;letter-spacing:.05em;padding:4px 7px;border-radius:3px;vertical-align:middle;margin-right:8px;text-transform:uppercase}
+.scope-banner{max-width:1200px;margin:16px auto 0;padding:10px 14px;border:1px solid #D0021B;background:#FFF5F6;color:#B00018;font:500 14px/1.5 'DM Sans',sans-serif;border-radius:4px}
+.scope-wrap{padding:0 32px}
+@media (max-width:720px){.scope-wrap{padding:0 20px}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <a class="logo" href="01-home.html">Business Name</a>
+    <a class="back" href="01-home.html">Back to site</a>
+  </div>
+</header>
+
+<main>
+<section class="wl" id="join" aria-labelledby="hero-h">
+  <div class="wrap">
+    <div class="wl-copy">
+      <div class="when">Coming [SEASON YEAR]</div>
+      <p class="pre">A new book: <span id="launchTitle">[Book title]</span></p>
+      <h1 id="hero-h">[The result the reader wants], without [the thing they are tired of]</h1>
+      <p class="lead">[Who it is for, in one line.] [What the book helps them do differently, in one line.]</p>
+      <p class="proofline">[Proof line, e.g. "Built from [X] years of work on [topic]" or "Read by [X] newsletter subscribers". Real figures only.]</p>
+    </div>
+    <div class="formcol">
+      <div class="offer">Join the waitlist and get <b>[the first chapter / a free guide]</b> in your inbox today.</div>
+      <form id="wl-form" novalidate>
+      <!-- Wix: ONE shared Wix Form ("Waitlist") on all waitlist pages. PLANNED EXCEPTION to the no-code rule: the "You're joining the waitlist for" field is filled by a small page-code snippet (added by the site owner after handover, not by BQ). See build note at the bottom of this file. -->
+      <div class="field"><label for="wn">Name *</label><input id="wn" type="text" autocomplete="name" required></div>
+      <div class="field"><label for="wem">Email *</label><input id="wem" type="email" autocomplete="email" required></div>
+      <div class="field prefill"><label for="wfor">You're joining the waitlist for</label><input id="wfor" type="text" readonly></div>
+      <div class="field">
+        <label class="check"><input type="checkbox" required> <span>I agree to receive emails about this launch from [Business Name] and accept the <a href="04-legal-privacy-policy.html">privacy policy</a>. I can unsubscribe at any time.</span></label>
+      </div>
+      <div class="field"><button class="btn" type="submit" style="width:100%">Join the waitlist</button></div>
+      <div class="success" role="status" aria-live="polite">
+        <strong>You're on the list</strong>
+        We'll email you when it opens, before anyone else.
+      </div>
+    </form>
+    </div>
+  </div>
+</section>
+
+<section class="sec g" aria-labelledby="pain-h">
+  <div class="wrap">
+    <h2 id="pain-h">Sound familiar?</h2>
+    <div class="pains">
+      <div class="pain">"[A frustration the reader would say in their own words.]"</div>
+      <div class="pain">"[A second frustration, e.g. what they have tried that didn't work.]"</div>
+      <div class="pain">"[A third frustration, e.g. the cost of leaving it unsolved.]"</div>
+    </div>
+  </div>
+</section>
+
+<section class="sec w" aria-labelledby="why-h">
+  <div class="wrap">
+    <h2 id="why-h">Why most advice on [topic] falls short</h2>
+    <p class="lede">[Two sentences: the common approach, and why it fails the reader. This is the insight the book is built on.]</p>
+    <div class="uses">
+      <div class="use"><h3>[Difference 1]</h3><p>[How this book approaches it differently, in one sentence.]</p></div>
+      <div class="use"><h3>[Difference 2]</h3><p>[One sentence.]</p></div>
+      <div class="use"><h3>[Difference 3]</h3><p>[One sentence.]</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec g" aria-labelledby="in-h">
+  <div class="wrap">
+    <div class="split">
+      <div class="media" style="aspect-ratio:2/3;max-width:340px">[Book cover]</div>
+      <div style="display:flex;flex-direction:column;gap:24px">
+        <h2 id="in-h">What you'll take away</h2>
+        <ul class="list">
+          <li><b>[Outcome 1].</b> [One sentence on what the reader can do after this part.]</li>
+          <li><b>[Outcome 2].</b> [One sentence.]</li>
+          <li><b>[Outcome 3].</b> [One sentence.]</li>
+          <li><b>[Outcome 4].</b> [One sentence.]</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec w" aria-labelledby="pre-h">
+  <div class="wrap">
+    <h2 id="pre-h">Read a page</h2>
+    <blockquote class="excerpt">[A short excerpt, 80–120 words, that shows the voice and one useful idea from the book.]</blockquote>
+  </div>
+</section>
+
+<section class="sec g" aria-labelledby="q-h">
+  <div class="wrap">
+    <h2 id="q-h">What early readers say</h2>
+    <div class="quotes">
+      <figure class="quote" style="margin:0"><p>"[Short quote about a specific result or reaction.]"</p><span>Early reader, [role]</span></figure>
+      <figure class="quote" style="margin:0"><p>"[Short quote about a specific result or reaction.]"</p><span>Early reader, [role]</span></figure>
+      <figure class="quote" style="margin:0"><p>"[Short quote about a specific result or reaction.]"</p><span>Early reader, [role]</span></figure>
+    </div>
+  </div>
+</section>
+
+<section class="sec w" aria-labelledby="perk-h">
+  <div class="wrap">
+    <h2 id="perk-h">Why join the waitlist now</h2>
+    <div class="uses">
+      <div class="use"><h3>Free chapter now</h3><p>[The first chapter / guide] arrives as soon as you join.</p></div>
+      <div class="use"><h3>[Launch offer]</h3><p>[e.g. Waitlist-only launch price or a signed copy.]</p></div>
+      <div class="use"><h3>Shape the book</h3><p>[e.g. Vote on the final chapter topic or the cover.]</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="faq t" aria-labelledby="faq-h">
+  <div class="wrap narrow">
+    <h2 id="faq-h">FAQ</h2>
+    <div>
+      <div class="q"><b>When does it come out?</b><p>[MONTH YEAR]. The waitlist hears first.</p></div>
+      <div class="q"><b>What will it cost?</b><p>[Expected price], with [launch offer] for the waitlist.</p></div>
+      <div class="q"><b>Is it for me if I'm new to [topic]?</b><p>[Yes / who it suits and who it doesn't.]</p></div>
+      <div class="q"><b>What emails will I get?</b><p>The free chapter, a few updates while the book is finished, and the launch announcement. Unsubscribe anytime.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="final w2" aria-labelledby="fin-h">
+  <div class="wrap">
+    <h2 id="fin-h">Be first when <span>[Book title]</span> launches</h2>
+    <p class="lede">Join now and get <b>[the first chapter / a free guide]</b> in your inbox today.</p>
+    <a class="btn" href="#join">Join the waitlist</a>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <a class="f-logo" href="01-home.html">Business Name</a>
+    <div class="f-grid">
+      <nav aria-labelledby="f-ex"><h2 id="f-ex">Explore</h2>
+        <a href="01-home.html">Home</a><a href="02-about-story.html">About Us</a><a href="../02-free-plan/01-free-blog-posts-articles.html">Articles</a><a href="21-courses.html">Courses</a><a href="23-library.html">Library</a><a href="24-consulting.html">Consulting</a><a href="19-events.html">Events</a><a href="16-shop-final-look.html">Shop</a><a href="../02-free-plan/02-community-final-look.html">Groups</a><a href="07-campaign-work-with-us-hub.html">Work with us</a><a href="32-case-studies.html">Case studies</a>
+      </nav>
+      <nav aria-labelledby="f-lg"><h2 id="f-lg">Legal Pages</h2>
+        <a href="04-legal-privacy-policy.html">Privacy Policy</a><a href="05-legal-terms-and-conditions.html">Terms &amp; Conditions</a><a href="06-legal-cookie-notice.html">Cookie Notice</a>
+      </nav>
+      <nav aria-labelledby="f-fo"><h2 id="f-fo">Follow</h2>
+        <a href="#">LinkedIn</a><a href="#">Instagram</a><a href="#">Youtube</a>
+      </nav>
+      <form class="f-form" id="f-form" novalidate>
+        <h2 class="f-title">Get new ideas by email</h2>
+        <div class="f-field"><label for="f-name">Name *</label><input id="f-name" type="text" autocomplete="name" required></div>
+        <div class="f-field"><label for="f-email">Email *</label><input id="f-email" type="email" autocomplete="email" required></div>
+        <label class="f-check f-field"><input type="checkbox" required> <span>I agree to receive emails from [Business Name] and accept the <a href="04-legal-privacy-policy.html">privacy policy</a>. I can unsubscribe at any time.</span></label>
+        <button class="f-btn f-field" type="submit">Subscribe</button>
+        <p class="f-done" role="status">Thanks, you’re subscribed.</p>
+      </form>
+    </div>
+    <div class="f-copy">© 2026 by Business Name · KvK [NUMBER]. Built on <a href="#">Wix Studio</a></div>
+  </div>
+</footer>
+
+<script>
+// Mock of the Wix page code: copy the launch title into the "Waitlist for" field
+document.getElementById('wfor').value = document.getElementById('launchTitle').textContent.trim();
+for (const f of document.querySelectorAll('form')) f.addEventListener('submit', function (e) {
+  e.preventDefault();
+  if (!this.checkValidity()) { this.reportValidity(); return; }
+  this.classList.add('sent');
+});
+</script>
+<!--
+BUILD NOTE (planned exception; page code, Wix Studio Velo; added by the site owner after handover). Same code on all four waitlist pages:
+  $w.onReady(function () {
+    $w('#waitlistForm').setFieldValues({ launch: $w('#launchTitle').text });
+  });
+#launchTitle = the launch title text element. #waitlistForm = the Wix Form element.
+"launch" = the field key of the "You're joining the waitlist for" field (form edit mode > field > Advanced tab).
+-->
+<script src="../brandkit.js"></script>
+</body>
+</html>

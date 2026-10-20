@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Course page (Template Sample)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --brand:#354A40; --accent:#8A6A2C; --cta:#B5D334;
+  --ink:#1F2A25; --body:#3B4842; --muted:#4A5751;
+  --line:#D6DAD7; --line-strong:#C9CECB; --placeholder:#DCE0DD;
+  --tint:#F3F5F3; --footer:#26352E; --footer-text:#D7DED9;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:'DM Sans','Helvetica Neue',sans-serif;color:var(--ink);background:#fff}
+a{color:#2F4238}a:hover{color:#1A2620}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+h1,h2,h3,.display{font-family:'Space Grotesk',sans-serif}
+.wrap{max-width:1200px;margin:0 auto;padding:0 32px}
+label{display:block}
+input,button{font:inherit}
+input[type=text],input[type=email]{width:100%;font-size:16px;color:var(--ink)}
+.f-check{display:flex}
+@media (max-width:720px){.wrap{padding:0 20px}}
+
+.btn{display:inline-block;background:var(--accent);color:#fff;font-weight:600;font-size:16px;padding:15px 26px;text-decoration:none;border:0;cursor:pointer}
+.btn-lime{background:var(--cta);color:var(--ink);border-radius:6px}
+.btn-lime:hover{background:#a3bf2b;color:var(--ink)}
+.ph{background:var(--placeholder);display:flex;align-items:center;justify-content:center;color:#46504B;font-size:14px;text-align:center;padding:12px}
+
+.chero{padding:56px 0 80px}
+.crumb{font-size:15px;color:var(--muted);margin-bottom:28px}
+.crumb a{color:var(--muted)}
+.chero .in{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:56px;align-items:center}
+.chero .cat{font-size:15px;font-weight:600;color:var(--accent)}
+.chero h1{margin:10px 0 0;font-size:clamp(38px,4.6vw,60px);line-height:1.04;letter-spacing:-.02em;color:var(--brand)}
+.chero .lead{margin:20px 0 0;font-size:19px;line-height:1.6;color:var(--body);max-width:540px}
+.facts{display:flex;flex-wrap:wrap;gap:10px 28px;margin:28px 0 0;padding:0;list-style:none;font-size:16px;color:var(--body)}
+.facts li{padding-left:18px;position:relative}
+.facts li::before{content:"";position:absolute;left:0;top:8px;width:8px;height:8px;border-radius:50%;background:var(--cta)}
+.buy{display:flex;align-items:center;gap:24px;margin-top:36px;flex-wrap:wrap}
+.buy .price{font-family:'Space Grotesk',sans-serif;font-size:34px;font-weight:600}
+.buy small{display:block;font-size:14px;color:var(--muted);font-family:'DM Sans',sans-serif;font-weight:400}
+.chero .ph{aspect-ratio:4/3}
+
+.outline{background:var(--tint);padding:80px 0 96px}
+.outline .in{display:grid;grid-template-columns:minmax(0,.7fr) minmax(0,1.3fr);gap:56px;align-items:start}
+.outline h2{margin:0;font-size:40px;line-height:1.08;color:var(--brand)}
+.outline .side p{margin:16px 0 0;font-size:17px;line-height:1.6;color:var(--body)}
+.sec-list{display:flex;flex-direction:column;gap:12px}
+details{background:#fff;border:1px solid var(--line-strong)}
+details[open]{border-color:var(--brand)}
+summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:20px 22px}
+summary::-webkit-details-marker{display:none}
+summary b{font-family:'Space Grotesk',sans-serif;font-size:19px;font-weight:600}
+summary span{font-size:15px;color:var(--muted);white-space:nowrap}
+summary::after{content:"+";font-size:22px;line-height:1;color:var(--brand);margin-left:8px}
+details[open] summary::after{content:"–"}
+.steps{list-style:none;margin:0;padding:0 22px 14px}
+.steps li{display:grid;grid-template-columns:72px 1fr auto;gap:12px;align-items:baseline;padding:12px 0;border-top:1px solid var(--line);font-size:16px}
+.steps .ty{font-size:13px;font-weight:600;color:var(--brand);background:#E7EFC6;padding:3px 8px;border-radius:4px;justify-self:start}
+.steps .ty.q{background:#EFE6D3;color:#6A5120}
+.steps .d{font-size:14px;color:var(--muted)}
+
+.after{padding:88px 0}
+.after h2{margin:0 0 36px;font-size:40px;line-height:1.08;color:var(--brand)}
+.three{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
+.three div{border-top:2px solid var(--brand);padding-top:16px}
+.three h3{margin:0;font-size:20px;font-weight:600}
+.three p{margin:8px 0 0;font-size:16px;line-height:1.55;color:var(--body)}
+
+@media (max-width:980px){.chero .in,.outline .in{grid-template-columns:1fr;gap:36px}.chero .ph{order:-1}}
+@media (max-width:620px){.three{grid-template-columns:1fr}.outline h2,.after h2{font-size:32px}.outline,.after{padding:64px 0}
+  .steps li{grid-template-columns:64px 1fr}.steps .d{grid-column:2}}
+
+/* ===== STANDARD SITE HEADER (global in Wix) ===== */
+.sh{background:#354A40;color:#fff;position:sticky;top:0;z-index:30;font-family:'DM Sans','Helvetica Neue',sans-serif}
+.sh *{box-sizing:border-box}
+.sh-bar{max-width:1200px;margin:0 auto;padding:16px 32px;display:flex;flex-wrap:nowrap;align-items:center;justify-content:space-between;gap:16px}
+.sh-logo{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:24px;color:#fff;text-decoration:none;white-space:nowrap}
+.sh .sh-nav{display:flex;align-items:center;gap:22px;font-size:16px;flex-wrap:nowrap;margin:0}
+.sh .sh-nav a{color:#fff;text-decoration:none;font-size:16px;white-space:nowrap}
+.sh .sh-nav a:hover,.sh .sh-nav a[aria-current]{text-decoration:underline;text-underline-offset:6px}
+.sh .sh-nav a[aria-current]{font-weight:600}
+.sh-act{display:flex;align-items:center;gap:16px;white-space:nowrap}
+.sh-act a{color:#fff;text-decoration:none;font-size:16px}
+.sh-join{background:#B5D334;color:#1F2A25 !important;font-weight:600;font-size:14px !important;padding:12px 28px;border-radius:6px}
+.sh-ico{position:relative;font-size:18px;line-height:1;color:#fff;background:none;border:0;padding:0;cursor:pointer}
+.sh-ico .n{position:absolute;top:-7px;right:-9px;background:#B5D334;color:#1F2A25;font-size:10px;font-weight:700;border-radius:9px;padding:1px 5px}
+.sh-av{width:32px;height:32px;border-radius:50%;background:#B5D334;color:#1F2A25;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700}
+.sh-burger{display:none;background:none;border:1px solid rgba(255,255,255,.5);color:#fff;font:inherit;padding:8px 12px;cursor:pointer}
+@media (max-width:1240px){.sh .sh-nav{display:none}.sh-burger{display:inline-block}}
+@media (max-width:720px){.sh-bar{padding:12px 20px;gap:10px}.sh-logo{font-size:20px}.sh-act .sh-login{display:none}.sh-join{padding:10px 16px}}
+
+/* ===== STANDARD SITE FOOTER (global in Wix; identical on every page) ===== */
+footer{--cta:#B5D334;--ink:#1F2A25;--line-strong:#C9CECB;font-family:'DM Sans','Helvetica Neue',sans-serif;line-height:normal}
+footer .wrap{max-width:1200px;margin:0 auto;padding:0 32px;box-sizing:border-box}
+footer *{box-sizing:border-box}
+footer nav{font-size:16px;align-items:stretch;flex-wrap:nowrap;justify-content:flex-start;margin:0}
+footer h2{font-family:'Space Grotesk',sans-serif;line-height:normal}
+footer label{font-size:15px;font-weight:600;display:block;margin-bottom:6px}
+footer input[type=text],footer input[type=email]{width:100%;font:inherit;font-size:16px;color:var(--ink);background:#fff;border:1px solid var(--line-strong);padding:12px 14px;border-radius:0}
+footer .success{display:none}
+footer{background:#374A42;color:#fff}
+footer .wrap{padding-top:64px;padding-bottom:48px;display:flex;flex-direction:column;gap:56px}
+.f-logo{font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:32px;color:#fff;text-decoration:none}
+.f-grid{display:grid;grid-template-columns:1fr 1.2fr 0.8fr 1.8fr;gap:32px;align-items:start}
+.f-grid nav{display:flex;flex-direction:column;gap:12px}
+.f-grid nav h2{margin:0 0 8px;font-weight:500;font-size:24px;color:#fff}
+.f-grid nav a{color:var(--cta);text-decoration:none;font-size:18px}
+.f-grid nav a:hover{text-decoration:underline;color:var(--cta)}
+.f-form{border:2px solid #fff;border-radius:10px;padding:24px 20px;display:flex;flex-direction:column;gap:18px;background:transparent}
+.f-title{margin:0;font-weight:500;font-size:32px;color:#fff}
+.f-form label{color:#fff;font-size:16px;font-weight:500;margin-bottom:8px}
+.f-form input[type=text],.f-form input[type=email]{background:#F4F5F1;border:0;border-radius:6px;padding:16px 14px}
+.f-check a{color:#fff}
+.f-check{display:flex;gap:14px;align-items:flex-start;font-weight:400;font-size:18px;line-height:1.5;margin:0}
+.f-check input{width:22px;height:22px;margin-top:4px;accent-color:var(--cta)}
+.f-btn{background:var(--cta);color:#1F2A25;border:0;border-radius:6px;font:inherit;font-size:18px;padding:14px;cursor:pointer}
+.f-done{display:none;margin:0;font-size:17px}
+.f-form.sent .f-field{display:none}.f-form.sent .f-done{display:block}
+.f-copy{font-size:16px}
+.f-copy a{color:#fff}
+@media (max-width:1080px){footer .f-grid{grid-template-columns:1fr 1fr}footer .f-form{grid-column:1/-1}}
+@media (max-width:720px){footer .wrap{padding-left:20px;padding-right:20px}}
+
+/* ===== CONSISTENCY LAYER (same on every page): type scale + buttons ===== */
+.hero h1,.bill h1{font-size:clamp(34px,4.2vw,54px)!important;line-height:1.06!important}
+.hero.about h1,.chero h1,.whero h1,.lhero h1,.bhero h1,.phd h1,.thero h1,.pintro h1,.wl-copy h1,.intro h1{font-size:clamp(30px,3.4vw,44px)!important;line-height:1.08!important}
+.head h2,.ap h2,.why .big,.cinfo h2,.outline h2,.after h2,.access h2,.mband h2{font-size:clamp(24px,2.4vw,32px)!important;line-height:1.15!important}
+.final h2{font-size:clamp(28px,3vw,40px)!important;line-height:1.1!important}
+a.btn,button.btn,span.btn{background:#B5D334!important;color:#1F2A25!important;border-radius:6px!important;border:0!important}
+a.btn:hover,button.btn:hover{background:#a3bf2b!important;color:#1F2A25!important}
+.btn.btn-line,.btn.ghost,.ev.past .btn{background:transparent!important;color:#354A40!important;border:2px solid #354A40!important}
+.btn.btn-line:hover,.btn.ghost:hover{background:#354A40!important;color:#fff!important}
+.bill .btn.btn-line,.sec.dark .btn.btn-line,.dark .btn.btn-line{color:#fff!important;border-color:#fff!important}
+
+/* menu fit with 10 items */
+@media (max-width:1440px) and (min-width:721px){.home .nav,.sh .sh-nav{gap:16px!important}.home .nav a,.sh .sh-nav a{font-size:15px!important}.home .hact,.sh-act{gap:12px!important}.home .hact .btn-lime,.sh-join{padding:11px 20px!important}}
+
+/* ===== CONSISTENCY LAYER 2: fonts, footer Explore in 2 columns, contrast, spacing ===== */
+body,button,input,select,textarea{font-family:'DM Sans','Helvetica Neue',sans-serif}
+h1,h2,h3,h4{font-family:'Space Grotesk',sans-serif}
+footer .f-grid{grid-template-columns:1.5fr .9fr .7fr 2.1fr!important;column-gap:56px!important}
+footer .f-grid nav[aria-labelledby="f-ex"]{display:block!important;columns:2;column-gap:48px}
+footer .f-grid nav[aria-labelledby="f-ex"] h2{column-span:all;margin-bottom:20px!important}
+footer .f-grid nav[aria-labelledby="f-ex"] a{display:block;margin-bottom:12px;break-inside:avoid}
+@media (max-width:1080px){footer .f-grid{grid-template-columns:1fr 1fr!important}}
+@media (max-width:720px){footer .f-grid nav[aria-labelledby="f-ex"]{grid-column:1/-1}}
+.dk .card,.dk .card h3{color:#1F2A25}
+.dk .card p,.dk .card li{color:#3B4842}
+.pad .wrap{padding-top:64px!important;padding-bottom:64px!important}
+.lsn{color:var(--ink);text-decoration:none}.lsn:hover{text-decoration:underline}
+
+/* f-title-size */ footer .f-title{font-size:26px!important;line-height:1.2} footer .f-check{font-size:16px!important}
+
+/* header full width: logo at the far left, actions at the far right */
+.home header .wrap.hbar,.sh-bar{max-width:none!important;padding-left:32px!important;padding-right:32px!important}
+@media (max-width:720px){.home header .wrap.hbar,.sh-bar{padding-left:20px!important;padding-right:20px!important}}
+</style>
+</head>
+<body>
+<!-- Standard site header (global): logo, main menu, cart icon (Wix Stores), Members login bar (logged out: Log in + Join Free; logged in: notifications + avatar). -->
+<header class="sh"><div class="sh-bar">
+  <a class="sh-logo" href="01-home.html">Business Name</a>
+  <nav class="sh-nav" aria-label="Main"><a href="01-home.html">Home</a><a href="02-about-story.html">About</a><a href="../02-free-plan/01-free-blog-posts-articles.html">Articles</a><a href="21-courses.html" aria-current="page">Courses</a><a href="34-app.html">App</a><a href="16-shop-final-look.html">Shop</a><a href="24-consulting.html">Consulting</a><a href="../02-free-plan/02-community-final-look.html">Community</a><a href="29-pricing.html">Pricing</a></nav>
+  <div class="sh-act"><a class="sh-login" href="00-app-log-in.html">Log in</a><a class="sh-join" href="00-app-join-free.html">Join Free</a><button class="sh-burger" type="button" aria-label="Open menu">Menu</button></div>
+</div></header>
+<main>
+<!-- COURSE PAGE = the Online Programs "Visitor Page", generated per program by the app. One design applies to every course.
+     Wix decides most of this layout; BQ styles it (fonts, colours, spacing) and chooses which blocks show in the widget settings. -->
+
+<!-- 1. COURSE HEADER (white). Visitor Page header block: category, title, description, details, price and "Join" button, cover image.
+     Breadcrumb: plain text link back to Courses (add above the widget). -->
+<section class="chero" aria-labelledby="h1">
+  <div class="wrap">
+    <nav class="crumb" aria-label="Breadcrumb"><a href="21-courses.html">Courses</a> › [Collection 1]</nav>
+    <div class="in">
+      <div>
+        <span class="cat">[Collection 1]</span>
+        <h1 id="h1">[Course title]</h1>
+        <p class="lead">[Two sentences: what the course covers and what someone can do after it.]</p>
+        <ul class="facts"><li>Self-paced</li><li>[3] sections</li><li>[10] lessons</li><li>Certificate on completion</li></ul>
+        <div class="buy">
+          <div class="price">€[X]<small>One-time payment, or included in the Member plan</small></div>
+          <a class="btn btn-lime" href="29-pricing.html">Join course</a>
+        </div>
+      </div>
+      <div class="ph">[Course cover image]</div>
+    </div>
+  </div>
+</section>
+
+<!-- 2. WHAT'S INSIDE (light grey). Lesson titles: after joining, each opens that lesson in the Online Programs participant page; before joining they show as locked (native behaviour).
+      Visitor Page "content overview": sections with their steps.
+     Setting: show the full outline, or only the first steps (Wix option) to keep some content hidden before purchase.
+     Step types: Video (Wix Video upload or YouTube/Vimeo link, BQ to confirm), Article, Quiz.
+     Free preview lessons inside a paid course are NOT native (listed as a Wix feature request). Use a free mini-course instead. -->
+<section class="outline" aria-labelledby="ol-h">
+  <div class="wrap">
+    <div class="in">
+      <div class="side">
+        <h2 id="ol-h">What's inside</h2>
+        <p>[One sentence on how the course is structured, e.g. short videos with a quiz at the end of each section.]</p>
+      </div>
+      <div class="sec-list">
+      <details open><summary><b>[Section 1: module title]</b><span>[4] lessons · [35] min</span></summary><ul class="steps"><li><span class="ty">Video</span><a class="lsn" href="00-app-lesson.html">🔒 [Lesson title]</a><span class="d">[8] min</span></li><li><span class="ty">Video</span><a class="lsn" href="00-app-lesson.html">🔒 [Lesson title]</a><span class="d">[12] min</span></li><li><span class="ty">Article</span><a class="lsn" href="00-app-lesson.html">🔒 [Short reading]</a><span class="d">[5] min read</span></li><li><span class="ty q">Quiz</span><a class="lsn" href="00-app-lesson.html">🔒 [Check your understanding]</a><span class="d">[5] questions</span></li></ul></details>
+      <details><summary><b>[Section 2: module title]</b><span>[3] lessons · [40] min</span></summary><ul class="steps"><li><span class="ty">Video</span><a class="lsn" href="00-app-lesson.html">🔒 [Lesson title]</a><span class="d">[15] min</span></li><li><span class="ty">Video</span><a class="lsn" href="00-app-lesson.html">🔒 [Lesson title]</a><span class="d">[18] min</span></li><li><span class="ty q">Quiz</span><a class="lsn" href="00-app-lesson.html">🔒 [Check your understanding]</a><span class="d">[5] questions</span></li></ul></details>
+      <details><summary><b>[Section 3: module title]</b><span>[3] lessons · [30] min</span></summary><ul class="steps"><li><span class="ty">Video</span><a class="lsn" href="00-app-lesson.html">🔒 [Lesson title]</a><span class="d">[10] min</span></li><li><span class="ty">Video</span><a class="lsn" href="00-app-lesson.html">🔒 [Lesson title]</a><span class="d">[14] min</span></li><li><span class="ty">Article</span><a class="lsn" href="00-app-lesson.html">🔒 [Summary and next steps]</a><span class="d">[4] min read</span></li></ul></details>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 3. HOW IT WORKS (white). Static text added under the widget. Keep only lines that are true for the brand. -->
+<section class="after" aria-labelledby="af-h">
+  <div class="wrap">
+    <h2 id="af-h">How it works</h2>
+    <div class="three">
+      <div><h3>Learn at your own pace</h3><p>Start any time and pick up where you left off on any device.</p></div>
+      <div><h3>Check what you've learned</h3><p>Short quizzes at the end of each section.</p></div>
+      <div><h3>Get a certificate</h3><p>Issued automatically when you finish every lesson.</p></div>
+    </div>
+  </div>
+</section>
+</main>
+<footer>
+  <div class="wrap">
+    <a class="f-logo" href="01-home.html">Business Name</a>
+    <div class="f-grid">
+      <nav aria-labelledby="f-ex"><h2 id="f-ex">Explore</h2>
+        <a href="01-home.html">Home</a><a href="02-about-story.html">About Us</a><a href="../02-free-plan/01-free-blog-posts-articles.html">Articles</a><a href="21-courses.html">Courses</a><a href="23-library.html">Library</a><a href="24-consulting.html">Consulting</a><a href="19-events.html">Events</a><a href="16-shop-final-look.html">Shop</a><a href="../02-free-plan/02-community-final-look.html">Groups</a><a href="07-campaign-work-with-us-hub.html">Work with us</a><a href="32-case-studies.html">Case studies</a>
+      </nav>
+      <nav aria-labelledby="f-lg"><h2 id="f-lg">Legal Pages</h2>
+        <a href="04-legal-privacy-policy.html">Privacy Policy</a><a href="05-legal-terms-and-conditions.html">Terms &amp; Conditions</a><a href="06-legal-cookie-notice.html">Cookie Notice</a>
+      </nav>
+      <nav aria-labelledby="f-fo"><h2 id="f-fo">Follow</h2>
+        <a href="#">LinkedIn</a><a href="#">Instagram</a><a href="#">Youtube</a>
+      </nav>
+      <form class="f-form" id="f-form" novalidate>
+        <h2 class="f-title">Get new ideas by email</h2>
+        <div class="f-field"><label for="f-name">Name *</label><input id="f-name" type="text" autocomplete="name" required></div>
+        <div class="f-field"><label for="f-email">Email *</label><input id="f-email" type="email" autocomplete="email" required></div>
+        <label class="f-check f-field"><input type="checkbox" required> <span>I agree to receive emails from [Business Name] and accept the <a href="04-legal-privacy-policy.html">privacy policy</a>. I can unsubscribe at any time.</span></label>
+        <button class="f-btn f-field" type="submit">Subscribe</button>
+        <p class="f-done" role="status">Thanks, you’re subscribed.</p>
+      </form>
+    </div>
+    <div class="f-copy">© 2026 by Business Name · KvK [NUMBER]. Built on <a href="#">Wix Studio</a></div>
+  </div>
+</footer>
+<script>(function(){var f=document.getElementById('f-form');if(f)f.addEventListener('submit',function(e){e.preventDefault();if(!this.checkValidity()){this.reportValidity();return;}this.classList.add('sent');});})();</script>
+<script src="../brandkit.js"></script>
+</body>
+</html>
